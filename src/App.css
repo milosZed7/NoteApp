@@ -1,0 +1,267 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+.App {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+.note-component {
+    box-sizing: content-box;
+    height: 90vh;
+    border-radius: 5px;
+    min-width: 400px;
+    border: 15px solid rgba(0, 0, 0, 0.2);
+}
+
+.note-wrapper {
+    background: #414141;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-flow: column;
+    /* border: 1px solid red; */
+}
+
+
+/* Note List start */
+
+.note-list {
+    flex: 2 1;
+    display: flex;
+    flex-flow: column;
+    /* border: 1px solid blue; */
+}
+
+
+/* Note List end */
+
+
+/* Note item start */
+
+.note {
+    /* border: 1px solid black; */
+    flex-basis: 15%;
+    margin: 5px;
+    background: #363636;
+    color: #ccc;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.note:hover {
+    background: #484848;
+}
+
+.note:hover .note-slider {
+    transform: translateX(0);
+}
+
+.note:hover .note-content .date {
+    transform: translateX(calc(-100% - 10px));
+}
+
+.note-content {
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.text {
+    grid-column: span 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    justify-self: start;
+}
+
+.title {
+    text-transform: capitalize;
+}
+
+.date,
+.title {
+    white-space: nowrap;
+    align-self: end;
+}
+
+.date {
+    transition: transform 0.2s ease-in;
+    justify-self: end;
+    transform: translateX(0%);
+}
+
+.title {
+    justify-self: start;
+}
+
+.note-slider {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 30%;
+    display: flex;
+    width: 25%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    transform: translateX(calc(20px + 100%));
+    transition: all 0.2s ease-in;
+}
+
+.slider-item {
+    padding: 10px;
+    color: #F96816;
+}
+
+.slider-item:hover {
+    background: #363636;
+    user-select: none;
+    color: rgb(250, 137, 72);
+}
+
+
+/* Note item end */
+
+
+/* Add note start*/
+
+.add-note {
+    margin: 10px 10px;
+    display: flex;
+    flex-flow: column;
+    width: calc(100% - 20px);
+    border: 1px solid red;
+}
+
+.note-input {
+    transition: transform 0.2s ease-in;
+    font-size: 20px;
+    height: 80px;
+    resize: none;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    transform: translateY(60%);
+    position: relative;
+    z-index: 2;
+}
+
+.note-input::-webkit-input-placeholder {
+    font-size: 20px;
+}
+
+.note-input-translate {
+    transform: translateY(0%);
+}
+
+.add-note-btn {
+    transition: opacity 0.2s ease-in;
+    box-sizing: content-box;
+    height: 50px;
+    font-size: 20px;
+    background: #F96816;
+    color: white;
+    border: 1px solid #F96816;
+    text-align: center;
+    border-radius: 2px;
+    box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
+    outline: none;
+    user-select: none;
+    opacity: 0;
+}
+
+.add-note-btn-opacity {
+    opacity: 1;
+}
+
+.add-note-btn:hover {
+    background: rgb(250, 137, 72);
+}
+
+.save-type {
+    display: flex;
+    justify-content: flex-end;
+    color: #ccc;
+    padding: 10px 0;
+}
+
+.press-enter {
+    padding-right: 10px;
+    user-select: none;
+}
+
+.press-enter span {
+    border: 1px solid #ccc;
+    padding: 0 7px;
+}
+
+.off-on-btn {
+    background: #555;
+    border-radius: 10px;
+    width: 50px;
+    height: 15px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s 0.2s ease;
+}
+
+.ball {
+    transition: all 0.4s ease;
+    position: absolute;
+    width: 33.333%;
+    background: white;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.translate-ball {
+    transform: translateX(calc(2*100%));
+}
+
+.off-on-btn-clicked {
+    background: #F96816;
+}
+
+
+/* Add note end */
