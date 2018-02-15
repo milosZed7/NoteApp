@@ -6,9 +6,8 @@ class AddNote extends React.Component {
         const ballTranslateClass = this.props.saveBtnOn ? 'translate-ball' : '';
         const opacitySaveBtnClass = this.props.saveBtnOn ? 'add-note-btn-opacity' : '';
         const translateNoteInputClass = this.props.saveBtnOn ? 'note-input-translate' : '';
-
         return (
-            <div className="add-note">
+            <div className={`add-note`}>
                 <textarea className={`note-input ${translateNoteInputClass}`} placeholder="Add a note..."></textarea>
                 <button className={`add-note-btn ${opacitySaveBtnClass}`}>Save note</button>
                 <div className="save-type">

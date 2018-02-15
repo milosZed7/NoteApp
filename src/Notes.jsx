@@ -10,8 +10,7 @@ class Notes extends React.Component {
             { id: 3, text: 'third note', date: '14.02.2018.', title: 'Note title3' },
             { id: 4, text: 'third note', date: '14.02.2018.', title: 'Note title3' },
             { id: 5, text: 'third note', date: '14.02.2018.', title: 'Note title3' },
-            { id: 6, text: 'third note', date: '14.02.2018.', title: 'Note title3' },
-            { id: 7, text: 'third note', date: '14.02.2018.', title: 'Note title3' }
+            
         ],
         saveBtnOn: false,
     };

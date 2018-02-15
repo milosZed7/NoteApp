@@ -42,14 +42,14 @@ html {
     box-sizing: content-box;
     height: 90vh;
     border-radius: 5px;
-    min-width: 400px;
-    border: 15px solid rgba(0, 0, 0, 0.2);
+    width: 500px;
+    /* border: 15px solid rgba(0, 0, 0, 0.2); */
 }
 
 .note-wrapper {
     background: #414141;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     display: flex;
     flex-flow: column;
     /* border: 1px solid red; */
@@ -59,10 +59,26 @@ html {
 /* Note List start */
 
 .note-list {
-    flex: 2 1;
-    display: flex;
-    flex-flow: column;
+    /* flex: 2 1 auto; */
+    flex-grow: 1;
+    /* display: flex;
+    flex-flow: column; */
     /* border: 1px solid blue; */
+    overflow-x: hidden;
+}
+
+.note-list::-webkit-scrollbar {
+    width: 7px;
+}
+ 
+.note-list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 15px;
+}
+ 
+.note-list::-webkit-scrollbar-thumb {
+  background-color: #363636;
+  border-radius: 15px;  
 }
 
 
@@ -73,7 +89,8 @@ html {
 
 .note {
     /* border: 1px solid black; */
-    flex-basis: 15%;
+    /* flex-basis: 15%; */
+    height: 70px;
     margin: 5px;
     background: #363636;
     color: #ccc;
@@ -107,10 +124,12 @@ html {
 }
 
 .text {
+    width: 100%;
     grid-column: span 2;
     overflow: hidden;
     text-overflow: ellipsis;
-    justify-self: start;
+    white-space: nowrap;
+    text-align: start;
 }
 
 .title {
@@ -164,25 +183,30 @@ html {
 /* Add note start*/
 
 .add-note {
-    margin: 10px 10px;
+    flex-shrink: 0;
+    /* margin: 0 auto; */
+    padding: 10px 10px;
     display: flex;
     flex-flow: column;
-    width: calc(100% - 20px);
-    border: 1px solid red;
+    /* width: calc(100% - 20px); */
+    transition: flex 0.2s ease-in;
+    /* border: 1px solid red; */
+    box-sizing: border-box;
 }
 
 .note-input {
-    transition: transform 0.2s ease-in;
+    box-sizing: border-box;
+    transition: margin-bottom .2s ease-in-out;
     font-size: 20px;
     height: 80px;
     resize: none;
-    margin-bottom: 10px;
     box-shadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.2);
     outline: none;
     padding: 10px;
     border-radius: 5px;
     border: 0;
-    transform: translateY(60%);
+    /* transform: translateY(60%); */
+    margin-bottom: -50px;
     position: relative;
     z-index: 2;
 }
@@ -192,7 +216,8 @@ html {
 }
 
 .note-input-translate {
-    transform: translateY(0%);
+    /* transform: translateY(0%); */
+    margin-bottom: 10px;
 }
 
 .add-note-btn {
@@ -237,7 +262,7 @@ html {
 }
 
 .off-on-btn {
-    background: #555;
+    background: #F96816;;
     border-radius: 10px;
     width: 50px;
     height: 15px;
@@ -253,14 +278,15 @@ html {
     background: white;
     height: 100%;
     border-radius: 50%;
-}
-
-.translate-ball {
     transform: translateX(calc(2*100%));
 }
 
+.translate-ball {
+    transform: translateX(0);
+}
+
 .off-on-btn-clicked {
-    background: #F96816;
+    background: #555;
 }
 
 
