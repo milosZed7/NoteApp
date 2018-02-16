@@ -51,8 +51,8 @@ class Notes extends React.Component {
             if (titleEmpty || textEmpty) {
                 this.setState({
                     newNote: {
-                        title: titleEmpty? '': newNote.title,
-                        text: textEmpty? '': newNote.text,
+                        title: titleEmpty ? '' : newNote.title,
+                        text: textEmpty ? '' : newNote.text
                     },
                     noteTextError: textEmpty,
                     noteTitleError: titleEmpty
@@ -64,7 +64,7 @@ class Notes extends React.Component {
             newNote.id = genId.bind(this)();
             this.setState({
                 newNote: this.resetNote(),
-                notes: this.state.notes.concat(newNote),
+                notes: [newNote].concat(this.state.notes),
                 noteTextError: false,
                 noteTitleError: false
             });
@@ -90,21 +90,19 @@ class Notes extends React.Component {
         }
     };
 
-    errorAnimationEnd = (evt) =>{
-        if(evt.animationName !=='show-error') return;
+    errorAnimationEnd = evt => {
+        if (evt.animationName !== 'show-error') return;
         const classList = evt.target.classList;
-        
-        if(classList.contains('note-text-error') ){
+
+        if (classList.contains('note-text-error')) {
             this.setState({
-                noteTextError: false,
+                noteTextError: false
             });
-           
-        } 
-        else if( classList.contains('note-title-error') ){
+        } else if (classList.contains('note-title-error')) {
             this.setState({
-                noteTitleError: false,
+                noteTitleError: false
             });
-        } 
+        }
     };
 
     render() {
@@ -121,7 +119,7 @@ class Notes extends React.Component {
                         noteTextChange={this.noteTextChange}
                         noteTextError={this.state.noteTextError}
                         noteTitleError={this.state.noteTitleError}
-                        errorAnimationEnd = {this.errorAnimationEnd}
+                        errorAnimationEnd={this.errorAnimationEnd}
                     />
                 </div>
             </div>

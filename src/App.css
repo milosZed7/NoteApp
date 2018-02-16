@@ -91,6 +91,7 @@ html {
 .note {
     /* border: 1px solid black; */
     /* flex-basis: 15%; */
+    user-select: none;
     height: 70px;
     margin: 5px;
     background: #363636;
@@ -103,11 +104,11 @@ html {
     animation: note-anim 0.4s ease-out;
 }
 
-@keyframes note-anim{
-    from{
+@keyframes note-anim {
+    from {
         transform: translateX(calc(100% + 10px));
     }
-    to{
+    to {
         transform: translateX(0);
     }
 }
@@ -326,7 +327,7 @@ html {
     transition: all 0.4s ease-in-out;
     z-index: -1;
     border: 1px solid #86181d;
-    box-shadow: 0px 0px 0px 2px #77090fa6; 
+    box-shadow: 0px 0px 0px 2px #77090fa6;
 }
 
 .note-title-error {
@@ -342,22 +343,23 @@ html {
 
 .note-title-error-show,
 .note-text-error-show {
-    animation: show-error 4s ease-out,
-        translate-error 0.4s ease-in-out forwards;
+    animation: show-error 4s ease-out, translate-error 0.4s ease-in-out forwards;
 }
 
-@keyframes show-error{
-    from{
+@keyframes show-error {
+    from {
         z-index: 3;
     }
-    to{
+    to {
         z-index: 3;
     }
 }
-@keyframes translate-error{
-    100%{
+
+@keyframes translate-error {
+    100% {
         transform: translateY(calc(-100% - 2px));
     }
 }
+
 
 /* Add note end */
