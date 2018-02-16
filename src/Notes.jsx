@@ -46,12 +46,16 @@ class Notes extends React.Component {
     addNote = evt => {
         if ((this.state.saveBtnOn && evt.keyCode === 13) || evt.button === 0) {
             const newNote = Object.assign({}, this.state.newNote);
-
-            if (!newNote.title.trim() || !newNote.text.trim()) {
+            const titleEmpty = !newNote.title.trim();
+            const textEmpty = !newNote.text.trim();
+            if (titleEmpty || textEmpty) {
                 this.setState({
-                    newNote: this.resetNote(),
-                    noteTextError: !newNote.text.trim(),
-                    noteTitleError: !newNote.title.trim()
+                    newNote: {
+                        title: titleEmpty? '': newNote.title,
+                        text: textEmpty? '': newNote.text,
+                    },
+                    noteTextError: textEmpty,
+                    noteTitleError: titleEmpty
                 });
                 return;
             }
@@ -83,6 +87,23 @@ class Notes extends React.Component {
         }
     };
 
+    errorAnimationEnd = (evt) =>{
+        if(evt.animationName !=='show-error') return;
+        const classList = evt.target.classList;
+        
+        if(classList.contains('note-text-error') ){
+            this.setState({
+                noteTextError: false,
+            });
+           
+        } 
+        else if( classList.contains('note-title-error') ){
+            this.setState({
+                noteTitleError: false,
+            });
+        } 
+    };
+
     render() {
         return (
             <div className="note-component">
@@ -97,6 +118,7 @@ class Notes extends React.Component {
                         noteTextChange={this.noteTextChange}
                         noteTextError={this.state.noteTextError}
                         noteTitleError={this.state.noteTitleError}
+                        errorAnimationEnd = {this.errorAnimationEnd}
                     />
                 </div>
             </div>

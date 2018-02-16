@@ -314,26 +314,40 @@ html {
     border-radius: 5px;
     box-sizing: border-box;
     transition: all 0.4s ease-in-out;
+    z-index: -1;
+    border: 1px solid #86181d;
+    box-shadow: 0px 0px 0px 2px #77090fa6; 
 }
 
 .note-title-error {
     height: 40px;
     left: 10px;
-    z-index: -1;
 }
 
 .note-text-error {
     height: 40px;
     top: 52px;
     right: 10px;
-    z-index: 0;
 }
 
 .note-title-error-show,
 .note-text-error-show {
-    z-index: 3;
-    transform: translateY(calc(-100% - 2px));
+    animation: show-error 4s ease-out,
+        translate-error 0.4s ease-in-out forwards;
 }
 
+@keyframes show-error{
+    from{
+        z-index: 3;
+    }
+    to{
+        z-index: 3;
+    }
+}
+@keyframes translate-error{
+    100%{
+        transform: translateY(calc(-100% - 2px));
+    }
+}
 
 /* Add note end */

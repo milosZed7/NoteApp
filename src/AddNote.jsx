@@ -34,10 +34,10 @@ class AddNote extends React.Component {
                         <div className={`ball ${ballTranslateClass}`} />
                     </div>
                 </div>
-                <div className={`note-title-error ${this.props.noteTitleError ? 'note-title-error-show' : ''}`}>
+                <div className={`note-title-error ${this.props.noteTitleError ? 'note-title-error-show' : ''}`} onAnimationEnd={this.props.errorAnimationEnd}>
                     Title empty
                 </div>
-                <div className={`note-text-error ${this.props.noteTextError ? 'note-text-error-show' : ''}`}>
+                <div className={`note-text-error ${this.props.noteTextError ? 'note-text-error-show' : ''}`} onAnimationEnd={this.props.errorAnimationEnd}>
                     Note content empty
                 </div>
             </div>
