@@ -68,6 +68,9 @@ class Notes extends React.Component {
                 noteTextError: false,
                 noteTitleError: false
             });
+
+            //  const noteList = evt.target.parentElement.previousSibling;
+            //  scrollNoteListToEnd(noteList);
         }
 
         function genId() {
