@@ -1,6 +1,9 @@
 import React from 'react';
 import NoteList from './NoteList';
 import AddNote from './AddNote';
+
+const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
+
 class Notes extends React.Component {
     state = {
         notes: [
@@ -11,6 +14,7 @@ class Notes extends React.Component {
         noteTitleError: false,
         noteTextError: false,
         noteEditMode: { id: null, text: '' },
+        deletedNotes: [],
         newNote: {
             title: '',
             text: '',
@@ -109,6 +113,28 @@ class Notes extends React.Component {
         });
     };
 
+    deleteNote = id => {
+        const timeOutId = setTimeout(() => {
+            this.setState({
+                notes: this.state.notes.filter(note => note.id !== id)
+            });
+        }, TIME_LEFT_TO_DELETE_NOTE);
+
+        const note = {
+            id,
+            timeOutId
+        };
+        this.setState({
+            deletedNotes: this.state.deletedNotes.concat(note)
+        });
+    };
+    undoDeletedNote = undoId => {
+        const note = this.state.deletedNotes.find(note => note.id === undoId);
+        clearTimeout(note.timeOutId);
+        this.setState({
+            deletedNotes: this.state.deletedNotes.filter(note => note.id !== undoId)
+        });
+    };
     errorAnimationEnd = evt => {
         if (evt.animationName !== 'show-error') return;
         const classList = evt.target.classList;
@@ -134,6 +160,9 @@ class Notes extends React.Component {
                         onEditNote={this.editNote}
                         saveNote={this.saveNote}
                         cancelEditingNote={this.cancelEditingNote}
+                        deletedNotes={this.state.deletedNotes}
+                        deleteNote={this.deleteNote}
+                        undoDeletedNote={this.undoDeletedNote}
                     />
                     <AddNote
                         showSaveBtn={this.showSaveBtn}

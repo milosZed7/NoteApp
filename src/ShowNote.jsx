@@ -9,7 +9,9 @@ const ShowNote = props => {
                 <div className="date">{props.date}</div>
             </div>
             <div className="note-slider">
-                <div className="slider-item delete">delete</div>
+                <div className="slider-item delete" onClick={() => props.deleteNote(props.id)}>
+                    delete
+                </div>
                 <div
                     className="slider-item edit"
                     onClick={() => {

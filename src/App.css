@@ -93,7 +93,8 @@ html {
 }
 
 .note,
-.edit-note {
+.edit-note,
+.delete-note {
     user-select: none;
     height: 70px;
     margin: 5px;
@@ -103,10 +104,6 @@ html {
     font-size: 20px;
     overflow: hidden;
     position: relative;
-}
-
-.note {
-    cursor: pointer;
 }
 
 @keyframes note-anim {
@@ -378,11 +375,11 @@ html {
 /* Edit note start*/
 
 .note-input-text.editing-note {
-    animation: show-edit 0.3s ease-in;
+    animation: show-edit-delete 0.3s ease-in;
     grid-column: span 2;
 }
 
-@keyframes show-edit {
+@keyframes show-edit-delete {
     0% {
         opacity: 0;
     }
@@ -428,7 +425,8 @@ html {
 }
 
 .save-edited-note :last-child:hover,
-.cancel-edit:hover {
+.cancel-edit:hover,
+.delete-note span:hover {
     background: #484848;
     user-select: none;
     color: rgb(250, 137, 72);
@@ -441,3 +439,23 @@ html {
 
 
 /* Edit note end */
+
+
+/* Delete note start */
+
+.delete-note {
+    animation: show-edit-delete 0.3s ease-in;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px inset #ccc;
+}
+
+.delete-note span {
+    font-size: 20px;
+    color: #F96816;
+    padding: 5px;
+}
+
+
+/* Delete note end */

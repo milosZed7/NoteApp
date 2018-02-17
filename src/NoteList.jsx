@@ -14,6 +14,9 @@ const NoteList = props => {
                 noteEditMode={props.noteEditMode}
                 saveNote={props.saveNote}
                 cancelEditingNote={props.cancelEditingNote}
+                deletedNotes={props.deletedNotes}
+                deleteNote={props.deleteNote}
+                undoDeletedNote={props.undoDeletedNote}
             />
         );
     };
