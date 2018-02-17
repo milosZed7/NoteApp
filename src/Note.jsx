@@ -1,21 +1,25 @@
 import React from 'react';
+import EditNote from './EditNote';
+import ShowNote from './ShowNote';
 
-const Note = (props) => {
-    return (
-        <div className="note">
-            <div className="note-content">
-                <div className="text">
-                    {props.text}
-                </div>
-                <div className="title">{props.title}</div>
-                <div className="date">{props.date}</div>
-            </div>
-            <div className="note-slider">
-                <div className="slider-item delete">delete</div>
-                <div className="slider-item edit">edit</div>
-            </div>
-        </div>
-    );
+const Note = props => {
+    let renderingNote;
+    if (props.editNoteId !== props.id) {
+        renderingNote = (
+            <ShowNote
+                id={props.id}
+                title={props.title}
+                text={props.text}
+                date={props.date}
+                editNote={props.editNote}
+                editNoteId={props.editNoteId}
+            />
+        );
+    } else {
+        renderingNote = <EditNote id={props.id} title={props.title} text={props.text} />;
+    }
+
+    return <div className="note-holder">{renderingNote}</div>;
 };
 
 export default Note;

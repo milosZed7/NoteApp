@@ -88,9 +88,12 @@ html {
 
 /* Note item start */
 
-.note {
-    /* border: 1px solid black; */
-    /* flex-basis: 15%; */
+.note-holder {
+    animation: note-anim 0.4s ease-out;
+}
+
+.note,
+.edit-note {
     user-select: none;
     height: 70px;
     margin: 5px;
@@ -98,10 +101,12 @@ html {
     color: #ccc;
     padding: 10px;
     font-size: 20px;
-    cursor: pointer;
     overflow: hidden;
     position: relative;
-    animation: note-anim 0.4s ease-out;
+}
+
+.note {
+    cursor: pointer;
 }
 
 @keyframes note-anim {
@@ -363,3 +368,71 @@ html {
 
 
 /* Add note end */
+
+
+/* Edit note start*/
+
+.note-input-text.editing-note {
+    animation: show-edit 0.3s ease-in;
+    grid-column: span 2;
+}
+
+@keyframes show-edit {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.edit-note {
+    height: 105px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    grid-gap: 5px;
+}
+
+.cancel-edit {
+    align-self: center;
+    justify-self: start;
+}
+
+.save-edited-note {
+    align-self: center;
+    justify-self: end;
+}
+
+.save-edited-note,
+.cancel-edit {
+    font-size: 16px;
+    color: #F96816;
+    margin: 50px 0;
+    padding: 5px;
+}
+
+.save-edited-note {
+    color: #ccc;
+}
+
+.save-edited-note :last-child {
+    color: #F96816;
+    padding: 5px;
+    margin-left: -3px;
+}
+
+.save-edited-note :last-child:hover,
+.cancel-edit:hover {
+    background: #484848;
+    user-select: none;
+    color: rgb(250, 137, 72);
+}
+
+.save-edited-note :first-child {
+    border: 1px solid #ccc;
+    padding: 0 7px;
+}
+
+
+/* Edit note end */

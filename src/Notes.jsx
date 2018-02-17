@@ -10,6 +10,7 @@ class Notes extends React.Component {
         saveBtnOn: true,
         noteTitleError: false,
         noteTextError: false,
+        editNoteId: null,
         newNote: {
             title: '',
             text: '',
@@ -20,9 +21,7 @@ class Notes extends React.Component {
     resetNote = () => {
         return {
             title: '',
-            text: '',
-            date: '',
-            id: ''
+            text: ''
         };
     };
 
@@ -68,9 +67,6 @@ class Notes extends React.Component {
                 noteTextError: false,
                 noteTitleError: false
             });
-
-            //  const noteList = evt.target.parentElement.previousSibling;
-            //  scrollNoteListToEnd(noteList);
         }
 
         function genId() {
@@ -89,7 +85,14 @@ class Notes extends React.Component {
             return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
         }
     };
-
+    editNote = id => {
+        this.setState({
+            editNoteId: id
+        });
+    };
+    saveEditedNote = evt => {
+        if (evt.keyCode !== 13 || evt.button !== 0) return;
+    };
     errorAnimationEnd = evt => {
         if (evt.animationName !== 'show-error') return;
         const classList = evt.target.classList;
@@ -109,7 +112,7 @@ class Notes extends React.Component {
         return (
             <div className="note-component">
                 <div className="note-wrapper">
-                    <NoteList notes={this.state.notes} />
+                    <NoteList notes={this.state.notes} editNoteId={this.state.editNoteId} onEditNote={this.editNote} />
                     <AddNote
                         showSaveBtn={this.showSaveBtn}
                         saveBtnOn={this.state.saveBtnOn}
