@@ -13,7 +13,7 @@ const ShowNote = props => {
                 <div
                     className="slider-item edit"
                     onClick={() => {
-                        props.editNote(props.id);
+                        props.editNote(props.id, props.text);
                     }}>
                     edit
                 </div>

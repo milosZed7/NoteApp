@@ -4,19 +4,22 @@ import ShowNote from './ShowNote';
 
 const Note = props => {
     let renderingNote;
-    if (props.editNoteId !== props.id) {
+    if (props.noteEditMode.id !== props.id) {
         renderingNote = (
-            <ShowNote
+            <ShowNote id={props.id} title={props.title} text={props.text} date={props.date} editNote={props.editNote} />
+        );
+    } else {
+        renderingNote = (
+            <EditNote
                 id={props.id}
                 title={props.title}
                 text={props.text}
-                date={props.date}
-                editNote={props.editNote}
-                editNoteId={props.editNoteId}
+                changeEditNote={props.editNote}
+                noteEditMode={props.noteEditMode}
+                saveNote={props.saveNote}
+                cancelEditingNote={props.cancelEditingNote}
             />
         );
-    } else {
-        renderingNote = <EditNote id={props.id} title={props.title} text={props.text} />;
     }
 
     return <div className="note-holder">{renderingNote}</div>;

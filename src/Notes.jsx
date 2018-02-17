@@ -10,7 +10,7 @@ class Notes extends React.Component {
         saveBtnOn: true,
         noteTitleError: false,
         noteTextError: false,
-        editNoteId: null,
+        noteEditMode: { id: null, text: '' },
         newNote: {
             title: '',
             text: '',
@@ -61,6 +61,7 @@ class Notes extends React.Component {
 
             newNote.date = getDate();
             newNote.id = genId.bind(this)();
+            newNote.text = newNote.text.trim();
             this.setState({
                 newNote: this.resetNote(),
                 notes: [newNote].concat(this.state.notes),
@@ -85,14 +86,29 @@ class Notes extends React.Component {
             return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
         }
     };
-    editNote = id => {
+    editNote = (id, text) => {
+        const newEditNote = Object.assign({}, this.state.noteEditMode, { id, text });
         this.setState({
-            editNoteId: id
+            noteEditMode: newEditNote
         });
     };
-    saveEditedNote = evt => {
-        if (evt.keyCode !== 13 || evt.button !== 0) return;
+    saveNote = (id, text) => {
+        console.log(id);
+        const notes = [...this.state.notes];
+        const note = notes.find(note => note.id === id);
+        note.text = text.trim();
+        this.setState({
+            notes,
+            noteEditMode: { id: null, text: '' }
+        });
     };
+
+    cancelEditingNote = () => {
+        this.setState({
+            noteEditMode: { id: null, text: '' }
+        });
+    };
+
     errorAnimationEnd = evt => {
         if (evt.animationName !== 'show-error') return;
         const classList = evt.target.classList;
@@ -112,7 +128,13 @@ class Notes extends React.Component {
         return (
             <div className="note-component">
                 <div className="note-wrapper">
-                    <NoteList notes={this.state.notes} editNoteId={this.state.editNoteId} onEditNote={this.editNote} />
+                    <NoteList
+                        notes={this.state.notes}
+                        noteEditMode={this.state.noteEditMode}
+                        onEditNote={this.editNote}
+                        saveNote={this.saveNote}
+                        cancelEditingNote={this.cancelEditingNote}
+                    />
                     <AddNote
                         showSaveBtn={this.showSaveBtn}
                         saveBtnOn={this.state.saveBtnOn}

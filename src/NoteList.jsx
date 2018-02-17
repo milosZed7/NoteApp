@@ -11,7 +11,9 @@ const NoteList = props => {
                 text={note.text}
                 date={note.date}
                 editNote={props.onEditNote}
-                editNoteId={props.editNoteId}
+                noteEditMode={props.noteEditMode}
+                saveNote={props.saveNote}
+                cancelEditingNote={props.cancelEditingNote}
             />
         );
     };
