@@ -1,6 +1,8 @@
 import React from 'react';
 import NoteList from './NoteList';
 import AddNote from './AddNote';
+import NoteModal from './NoteModal';
+import { TransitionGroup } from 'react-transition-group';
 
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
 
@@ -15,6 +17,8 @@ class Notes extends React.Component {
         noteTextError: false,
         noteEditMode: { id: null, text: '' },
         deletedNotes: [],
+        modalOn: false,
+        noteInModal: {},
         newNote: {
             title: '',
             text: '',
@@ -149,34 +153,54 @@ class Notes extends React.Component {
             });
         }
     };
-
+    showModal = note => {
+        this.setState({
+            modalOn: true,
+            noteInModal: note
+        });
+    };
+    closeModal = () => {
+        this.setState({
+            modalOn: false,
+            noteInModal: {}
+        });
+    };
     render() {
+        let showNoteModal;
+        if (this.state.modalOn) {
+            showNoteModal = <NoteModal note={this.state.noteInModal} closeModal={this.closeModal} />;
+        }
         return (
-            <div className="note-component">
-                <div className="note-wrapper">
-                    <NoteList
-                        notes={this.state.notes}
-                        noteEditMode={this.state.noteEditMode}
-                        onEditNote={this.editNote}
-                        saveNote={this.saveNote}
-                        cancelEditingNote={this.cancelEditingNote}
-                        deletedNotes={this.state.deletedNotes}
-                        deleteNote={this.deleteNote}
-                        undoDeletedNote={this.undoDeletedNote}
-                    />
-                    <AddNote
-                        showSaveBtn={this.showSaveBtn}
-                        saveBtnOn={this.state.saveBtnOn}
-                        note={this.state.newNote}
-                        addNote={this.addNote}
-                        noteTitleChange={this.noteTitleChange}
-                        noteTextChange={this.noteTextChange}
-                        noteTextError={this.state.noteTextError}
-                        noteTitleError={this.state.noteTitleError}
-                        errorAnimationEnd={this.errorAnimationEnd}
-                    />
+            <React.Fragment>
+                <TransitionGroup> {showNoteModal}</TransitionGroup>
+
+                <div className="note-component">
+                    <div className="note-wrapper">
+                        <NoteList
+                            notes={this.state.notes}
+                            noteEditMode={this.state.noteEditMode}
+                            onEditNote={this.editNote}
+                            saveNote={this.saveNote}
+                            cancelEditingNote={this.cancelEditingNote}
+                            deletedNotes={this.state.deletedNotes}
+                            deleteNote={this.deleteNote}
+                            undoDeletedNote={this.undoDeletedNote}
+                            showModal={this.showModal}
+                        />
+                        <AddNote
+                            showSaveBtn={this.showSaveBtn}
+                            saveBtnOn={this.state.saveBtnOn}
+                            note={this.state.newNote}
+                            addNote={this.addNote}
+                            noteTitleChange={this.noteTitleChange}
+                            noteTextChange={this.noteTextChange}
+                            noteTextError={this.state.noteTextError}
+                            noteTitleError={this.state.noteTitleError}
+                            errorAnimationEnd={this.errorAnimationEnd}
+                        />
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

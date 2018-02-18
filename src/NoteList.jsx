@@ -17,6 +17,7 @@ const NoteList = props => {
                 deletedNotes={props.deletedNotes}
                 deleteNote={props.deleteNote}
                 undoDeletedNote={props.undoDeletedNote}
+                showModal={props.showModal}
             />
         );
     };

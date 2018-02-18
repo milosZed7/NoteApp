@@ -16,6 +16,7 @@ const Note = props => {
                 date={props.date}
                 editNote={props.editNote}
                 deleteNote={props.deleteNote}
+                showModal={props.showModal}
             />
         );
     } else {
