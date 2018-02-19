@@ -16,7 +16,7 @@ const AddNote = props => {
                 onChange={props.noteTitleChange}
             />
             <textarea
-                className={`note-input-text ${translateNoteInputClass}`}
+                className={`note-input-text transition-margin ${translateNoteInputClass}`}
                 placeholder="Add a note..."
                 value={props.note.text}
                 onKeyUp={props.addNote}

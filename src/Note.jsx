@@ -5,7 +5,7 @@ import DeleteNote from './DeleteNote';
 
 const Note = props => {
     let renderingNote;
-    if (props.noteEditMode.id !== props.id) {
+    if (props.noteEditMode.id !== props.id || !props.noteEditMode.inList) {
         renderingNote = props.deletedNotes.some(note => note.id === props.id) ? (
             <DeleteNote undoDeletedNote={props.undoDeletedNote} id={props.id} />
         ) : (
@@ -29,6 +29,7 @@ const Note = props => {
                 noteEditMode={props.noteEditMode}
                 saveNote={props.saveNote}
                 cancelEditingNote={props.cancelEditingNote}
+                type="list"
             />
         );
     }

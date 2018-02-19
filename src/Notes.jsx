@@ -15,7 +15,7 @@ class Notes extends React.Component {
         saveBtnOn: true,
         noteTitleError: false,
         noteTextError: false,
-        noteEditMode: { id: null, text: '' },
+        noteEditMode: { id: null, text: '', inModal: false, inList:false },
         deletedNotes: [],
         modalOn: false,
         noteInModal: {},
@@ -94,20 +94,20 @@ class Notes extends React.Component {
             return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
         }
     };
-    editNote = (id, text) => {
-        const newEditNote = Object.assign({}, this.state.noteEditMode, { id, text });
+    editNote = (id, text, type) => {
+        const newEditNote = Object.assign({}, this.state.noteEditMode, { id, text, inList: type==='list',inModal:type==='modal'  });
         this.setState({
             noteEditMode: newEditNote
         });
     };
     saveNote = (id, text) => {
-        console.log(id);
         const notes = [...this.state.notes];
         const note = notes.find(note => note.id === id);
         note.text = text.trim();
         this.setState({
             notes,
-            noteEditMode: { id: null, text: '' }
+            noteEditMode: { id: null, text: '' },
+            noteInModal: note,
         });
     };
 
@@ -156,7 +156,8 @@ class Notes extends React.Component {
     showModal = note => {
         this.setState({
             modalOn: true,
-            noteInModal: note
+            noteInModal: note,
+            noteEditMode: Object.assign({},this.state.noteEditMode,{inList:false, inModal:false})
         });
     };
     closeModal = () => {
@@ -168,12 +169,18 @@ class Notes extends React.Component {
     render() {
         let showNoteModal;
         if (this.state.modalOn) {
-            showNoteModal = <NoteModal note={this.state.noteInModal} closeModal={this.closeModal} />;
+            showNoteModal = <NoteModal 
+            note={this.state.noteInModal} 
+            closeModal={this.closeModal} 
+            editNote={this.editNote} 
+            noteEditMode={this.state.noteEditMode}
+            saveNote={this.saveNote}
+            cancelEditingNote={this.cancelEditingNote}
+            />;
         }
         return (
             <React.Fragment>
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
-
                 <div className="note-component">
                     <div className="note-wrapper">
                         <NoteList

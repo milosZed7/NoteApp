@@ -224,7 +224,6 @@ html {
 
 .note-input-text {
     box-sizing: border-box;
-    transition: margin-bottom .2s ease-in-out;
     font-size: 20px;
     height: 80px;
     resize: none;
@@ -233,16 +232,19 @@ html {
     padding: 10px;
     border-radius: 5px;
     border: 0;
-    margin-bottom: -50px;
     position: relative;
     z-index: 2;
 }
 
+.note-input-text.transition-margin{
+    transition: margin-bottom .2s ease-in-out;
+    margin-bottom: -50px;
+}
 .note-input-text::-webkit-input-placeholder {
     font-size: 20px;
 }
 
-.note-input-translate {
+.note-input-text.transition-margin.note-input-translate {
     margin-bottom: 10px;
 }
 
@@ -375,8 +377,8 @@ html {
 /* Edit note start*/
 
 .note-input-text.editing-note {
-    animation: opacity-animation 0.3s ease-in;
     grid-column: span 2;
+    height: 100%;
 }
 
 @keyframes opacity-animation {
@@ -389,11 +391,14 @@ html {
 }
 
 .edit-note {
-    height: 105px;
+    height: 100%;
+    width: calc(100% - 10px);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 2fr 1fr;
     grid-gap: 5px;
+    animation: opacity-animation 0.3s ease-in;
+    box-sizing: border-box;
 }
 
 .cancel-edit {
@@ -410,8 +415,6 @@ html {
 .cancel-edit {
     font-size: 16px;
     color: #F96816;
-    margin: 50px 0;
-    padding: 5px;
 }
 
 .save-edited-note {
@@ -508,7 +511,7 @@ html {
     right: 10px;
     top: 2px;
     color: #F96816;
-    padding: 0px 2px;
+    padding: 0px 5px;
     user-select: none;
 }
 
@@ -522,9 +525,12 @@ html {
 }
 
 .note-modal-text {
+    width: 100%;
     overflow-wrap: break-word;
     overflow-y: auto;
     text-align: justify;
+    cursor: pointer;
+    user-select: none;
 }
 
 .note-modal-date {

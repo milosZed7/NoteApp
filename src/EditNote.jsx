@@ -2,7 +2,7 @@ import React from 'react';
 
 const EditNote = props => {
     const changeNoteInput = evt => {
-        props.changeEditNote(props.id, evt.target.value);
+        props.changeEditNote(props.id, evt.target.value, props.type);
     };
     const saveNote = evt => {
         console.log(evt.keyCode, evt.button);
