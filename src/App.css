@@ -148,6 +148,10 @@ html {
 
 .title {
     text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+    width: 200px;
 }
 
 .date,
@@ -160,10 +164,6 @@ html {
     transition: transform 0.2s ease-in;
     justify-self: end;
     transform: translateX(0%);
-}
-
-.title {
-    justify-self: start;
 }
 
 .note-slider {
@@ -423,8 +423,6 @@ html {
 
 .save-edited-note :last-child {
     color: #F96816;
-    padding: 5px;
-    margin-left: -3px;
 }
 
 .save-edited-note :last-child:hover,
@@ -535,4 +533,26 @@ html {
 
 .note-modal-date {
     justify-self: end;
+}
+
+
+@media all and (max-width: 600px){
+    .note-component{
+        width: 100vh;
+        transform: perspective(0) rotate(0deg);
+        height: 100vh;
+    }
+    .note-content .title{
+        width: 150px;
+    }
+
+    .add-note{
+        order: -1;
+    }
+}
+
+@media all and (max-width: 400px){
+    .note-content .title{
+        width: 100px;
+    }
 }
