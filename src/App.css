@@ -44,6 +44,7 @@ html {
     border-radius: 5px;
     width: 500px;
     transform: perspective(400px) rotateX(4deg);
+    transition: all 0.3s ease-in-out;
     /* border: 15px solid rgba(0, 0, 0, 0.2); */
 }
 
@@ -535,10 +536,30 @@ html {
     justify-self: end;
 }
 
-
+/* media queries section */
+@keyframes translate-error-down-text{
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(calc(200% + 2px));
+    }
+}
+@keyframes translate-error-down-title{
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(calc(300% + 4px));
+    }
+}
 @media all and (max-width: 600px){
     .note-component{
-        width: 100vh;
+        width: 100%;
         transform: perspective(0) rotate(0deg);
         height: 100vh;
     }
@@ -548,6 +569,17 @@ html {
 
     .add-note{
         order: -1;
+    }
+    .note-text-error{
+        left: 105px;
+        width: 150px;
+    }
+
+    .note-title-error-show{
+        animation: show-error 4s ease-out, translate-error-down-title 0.4s ease-in-out forwards;
+    }
+    .note-text-error-show {
+        animation: show-error 4s ease-out, translate-error-down-text 0.4s ease-in-out forwards;
     }
 }
 
