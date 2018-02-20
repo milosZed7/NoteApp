@@ -173,7 +173,7 @@ html {
     right: 0;
     height: 30%;
     display: flex;
-    width: 25%;
+    /* width: 25%; */
     justify-content: flex-end;
     align-items: flex-end;
     transform: translateX(calc(20px + 100%));
@@ -535,6 +535,25 @@ html {
 .note-modal-date {
     justify-self: end;
 }
+/* note-tranistion */
+.note-transition-enter {
+    transform: scale(0);
+}
+
+.note-transition-enter.note-transition-enter-active {
+    transform: scale(1);
+    transition: 5000ms transform ease-out;
+}
+
+.note-transition-exit.note-transition-exit-active {
+    transform: scale(0);
+    transition: 5000ms transfomr ease-out;
+}
+
+.note-transition-exit {
+    transform: scale(1);
+}
+/* --------------------------------------- */
 
 /* media queries section */
 @keyframes translate-error-down-text{

@@ -1,38 +1,50 @@
 import React from 'react';
+
 import EditNote from './EditNote';
 import ShowNote from './ShowNote';
 import DeleteNote from './DeleteNote';
 
-const Note = props => {
+const Note = ({
+    id,
+    title,
+    text,
+    date,
+    editNote,
+    saveNote,
+    cancelEditingNote,
+    noteEditMode,
+    undoDeletedNote,
+    deleteNote,
+    showModal,
+    mode,
+    ...props
+}) => {
     let renderingNote;
-    if (props.noteEditMode.id !== props.id || !props.noteEditMode.inList) {
-        renderingNote = props.deletedNotes.some(note => note.id === props.id) ? (
-            <DeleteNote undoDeletedNote={props.undoDeletedNote} id={props.id} />
-        ) : (
-            <ShowNote
-                id={props.id}
-                title={props.title}
-                text={props.text}
-                date={props.date}
-                editNote={props.editNote}
-                deleteNote={props.deleteNote}
-                showModal={props.showModal}
-            />
-        );
-    } else {
-        renderingNote = (
+    renderingNote =
+        mode === 'edit' ? (
             <EditNote
-                id={props.id}
-                title={props.title}
-                text={props.text}
-                changeEditNote={props.editNote}
-                noteEditMode={props.noteEditMode}
-                saveNote={props.saveNote}
-                cancelEditingNote={props.cancelEditingNote}
+                id={id}
+                title={title}
+                text={text}
+                changeEditNote={editNote}
+                noteEditMode={noteEditMode}
+                saveNote={saveNote}
+                cancelEditingNote={cancelEditingNote}
                 type="list"
             />
+        ) : mode === 'delete' ? (
+            <DeleteNote undoDeletedNote={undoDeletedNote} id={id} />
+        ) : (
+            <ShowNote
+                id={id}
+                title={title}
+                text={text}
+                date={date}
+                editNote={editNote}
+                deleteNote={deleteNote}
+                showModal={showModal}
+            />
         );
-    }
 
     return <div className="note-holder">{renderingNote}</div>;
 };

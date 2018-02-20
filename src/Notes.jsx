@@ -15,7 +15,7 @@ class Notes extends React.Component {
         saveBtnOn: true,
         noteTitleError: false,
         noteTextError: false,
-        noteEditMode: { id: null, text: '', inModal: false, inList:false },
+        noteEditMode: { id: null, text: '', inModal: false, inList: false },
         deletedNotes: [],
         modalOn: false,
         noteInModal: {},
@@ -31,6 +31,19 @@ class Notes extends React.Component {
             title: '',
             text: ''
         };
+    };
+
+    mapNotesToNotesWithMode = () => {
+        const list = [...this.state.notes];
+        const { noteEditMode, deletedNotes } = this.state;
+        return list.map(note => {
+            let mode =
+                noteEditMode.id === note.id && noteEditMode.inList
+                    ? 'edit'
+                    : deletedNotes.some(n => n.id === note.id) ? 'delete' : 'show';
+            note['mode'] = mode;
+            return note;
+        });
     };
 
     showSaveBtn = evt => {
@@ -95,7 +108,12 @@ class Notes extends React.Component {
         }
     };
     editNote = (id, text, type) => {
-        const newEditNote = Object.assign({}, this.state.noteEditMode, { id, text, inList: type==='list',inModal:type==='modal'  });
+        const newEditNote = Object.assign({}, this.state.noteEditMode, {
+            id,
+            text,
+            inList: type === 'list',
+            inModal: type === 'modal'
+        });
         this.setState({
             noteEditMode: newEditNote
         });
@@ -107,7 +125,7 @@ class Notes extends React.Component {
         this.setState({
             notes,
             noteEditMode: { id: null, text: '' },
-            noteInModal: note,
+            noteInModal: note
         });
     };
 
@@ -157,7 +175,7 @@ class Notes extends React.Component {
         this.setState({
             modalOn: true,
             noteInModal: note,
-            noteEditMode: Object.assign({},this.state.noteEditMode,{inList:false, inModal:false})
+            noteEditMode: Object.assign({}, this.state.noteEditMode, { inList: false, inModal: false })
         });
     };
     closeModal = () => {
@@ -169,14 +187,16 @@ class Notes extends React.Component {
     render() {
         let showNoteModal;
         if (this.state.modalOn) {
-            showNoteModal = <NoteModal 
-            note={this.state.noteInModal} 
-            closeModal={this.closeModal} 
-            editNote={this.editNote} 
-            noteEditMode={this.state.noteEditMode}
-            saveNote={this.saveNote}
-            cancelEditingNote={this.cancelEditingNote}
-            />;
+            showNoteModal = (
+                <NoteModal
+                    note={this.state.noteInModal}
+                    closeModal={this.closeModal}
+                    editNote={this.editNote}
+                    noteEditMode={this.state.noteEditMode}
+                    saveNote={this.saveNote}
+                    cancelEditingNote={this.cancelEditingNote}
+                />
+            );
         }
         return (
             <React.Fragment>
@@ -184,12 +204,11 @@ class Notes extends React.Component {
                 <div className="note-component">
                     <div className="note-wrapper">
                         <NoteList
-                            notes={this.state.notes}
+                            notes={this.mapNotesToNotesWithMode()}
                             noteEditMode={this.state.noteEditMode}
                             onEditNote={this.editNote}
                             saveNote={this.saveNote}
                             cancelEditingNote={this.cancelEditingNote}
-                            deletedNotes={this.state.deletedNotes}
                             deleteNote={this.deleteNote}
                             undoDeletedNote={this.undoDeletedNote}
                             showModal={this.showModal}
