@@ -237,10 +237,11 @@ html {
     z-index: 2;
 }
 
-.note-input-text.transition-margin{
+.note-input-text.transition-margin {
     transition: margin-bottom .2s ease-in-out;
     margin-bottom: -50px;
 }
+
 .note-input-text::-webkit-input-placeholder {
     font-size: 20px;
 }
@@ -474,7 +475,7 @@ html {
 
 .note-modal {
     position: relative;
-    width: 70vh;
+    width: 70%;
     background: #363636;
     padding: 20px;
     color: #ccc;
@@ -535,7 +536,10 @@ html {
 .note-modal-date {
     justify-self: end;
 }
+
+
 /* note-tranistion */
+
 .note-transition-enter {
     transform: scale(0);
 }
@@ -553,10 +557,14 @@ html {
 .note-transition-exit {
     transform: scale(1);
 }
+
+
 /* --------------------------------------- */
 
+
 /* media queries section */
-@keyframes translate-error-down-text{
+
+@keyframes translate-error-down-text {
     0% {
         opacity: 0;
         transform: translateY(0);
@@ -566,7 +574,8 @@ html {
         transform: translateY(calc(200% + 2px));
     }
 }
-@keyframes translate-error-down-title{
+
+@keyframes translate-error-down-title {
     0% {
         opacity: 0;
         transform: translateY(0);
@@ -576,28 +585,25 @@ html {
         transform: translateY(calc(300% + 4px));
     }
 }
-@media all and (max-width: 800px) , (max-height:700px ){
-    .note-component{
+
+@media all and (max-width: 600px),
+(max-height: 500px) {
+    .note-component {
         width: 100%;
         transform: perspective(0) rotate(0deg);
-        height: 100vh;
+        height: 100%;
     }
-    .add-note{
+    .add-note {
         order: -1;
     }
-}
-
-@media all and (max-width: 600px){
-    .note-content .title{
+    .note-content .title {
         width: 150px;
     }
-
-    .note-text-error{
+    .note-text-error {
         left: 105px;
         width: 150px;
     }
-
-    .note-title-error-show{
+    .note-title-error-show {
         animation: show-error 4s ease-out, translate-error-down-title 0.4s ease-in-out forwards;
     }
     .note-text-error-show {
@@ -605,8 +611,8 @@ html {
     }
 }
 
-@media all and (max-width: 400px){
-    .note-content .title{
+@media all and (max-width: 400px) {
+    .note-content .title {
         width: 100px;
     }
 }
