@@ -576,19 +576,22 @@ html {
         transform: translateY(calc(300% + 4px));
     }
 }
-@media all and (max-width: 600px){
+@media all and (max-width: 800px) , (max-height:700px ){
     .note-component{
         width: 100%;
         transform: perspective(0) rotate(0deg);
         height: 100vh;
     }
+    .add-note{
+        order: -1;
+    }
+}
+
+@media all and (max-width: 600px){
     .note-content .title{
         width: 150px;
     }
 
-    .add-note{
-        order: -1;
-    }
     .note-text-error{
         left: 105px;
         width: 150px;
