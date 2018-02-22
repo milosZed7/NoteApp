@@ -1,20 +1,3 @@
-body,
-html {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-    box-sizing: border-box;
-}
-
-*,
-*::after,
-*::before {
-    box-sizing: inherit;
-}
-
 .App {
     text-align: center;
     display: flex;
@@ -45,7 +28,7 @@ html {
     width: 500px;
     transform: perspective(400px) rotateX(4deg);
     transition: all 0.3s ease-in-out;
-    /* border: 15px solid rgba(0, 0, 0, 0.2); */
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 1);
 }
 
 .note-wrapper {

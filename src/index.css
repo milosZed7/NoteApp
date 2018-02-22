@@ -1,6 +1,18 @@
-body {
+body,
+html {
     margin: 0;
     padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
     font-family: sans-serif;
     background: goldenrod;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
 }
