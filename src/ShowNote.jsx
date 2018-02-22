@@ -18,7 +18,7 @@ const ShowNote = props => {
     const editNoteClick = evt => {
         evt.preventDefault();
         evt.stopPropagation();
-        props.editNote(props.id, props.text, 'list');
+        props.editNote(props.id, props.title, props.text, 'list');
     };
     return (
         <div className="note" onClick={showNoteInModal}>

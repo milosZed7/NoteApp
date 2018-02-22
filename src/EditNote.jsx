@@ -1,20 +1,35 @@
 import React from 'react';
 
 const EditNote = props => {
-    const changeNoteInput = evt => {
-        props.changeEditNote(props.id, evt.target.value, props.type);
+    const changeNoteText = evt => {
+        props.changeEditNote(props.id, evt.target.value, props.type, 'text');
+    };
+    const changeNoteTitle = evt => {
+        props.changeEditNote(props.id, evt.target.value, props.type, 'title');
     };
     const saveNote = evt => {
-        console.log(evt.keyCode, evt.button);
         if (!(evt.keyCode === 13 || evt.button === 0)) return;
-        props.saveNote(props.id, props.noteEditMode.text);
+        props.saveNote(props.id, props.noteEditMode.text, props.noteEditMode.title);
     };
     return (
-        <div className="edit-note">
+        <div className={`edit-note ${props.type === 'modal' ? 'edit-note-modal' : ''}`}>
+            {props.type === 'modal' ? (
+                <input
+                    type="text"
+                    className="note-input-title editing-note"
+                    placeholder="Edit Note Title"
+                    maxLength="50"
+                    value={props.noteEditMode.title}
+                    onChange={changeNoteTitle}
+                />
+            ) : (
+                <React.Fragment />
+            )}
             <textarea
+                placeholder="Edit Note Text"
                 className={`note-input-text editing-note`}
                 value={props.noteEditMode.text}
-                onChange={changeNoteInput}
+                onChange={changeNoteText}
                 onKeyUp={saveNote}
             />
             <div className="cancel-edit" onClick={props.cancelEditingNote}>

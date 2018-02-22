@@ -378,7 +378,8 @@ html {
 
 /* Edit note start*/
 
-.note-input-text.editing-note {
+.note-input-text.editing-note,
+.note-input-title.editing-note {
     grid-column: span 2;
     height: 100%;
 }
@@ -475,7 +476,8 @@ html {
 
 .note-modal {
     position: relative;
-    width: 70%;
+    width: 70vh;
+    height: 300px;
     background: #363636;
     padding: 20px;
     color: #ccc;
@@ -486,6 +488,10 @@ html {
     grid-template-columns: 100%;
     grid-template-rows: 1fr 200px 1fr;
     justify-items: start;
+}
+
+.edit-note.edit-note-modal {
+    grid-template-rows: 1fr 2fr 1fr;
 }
 
 .show-modal-enter {
@@ -522,6 +528,7 @@ html {
 
 .note-modal-title {
     font-size: 22px;
+    cursor: pointer;
 }
 
 .note-modal-text {
@@ -592,6 +599,9 @@ html {
         width: 100%;
         transform: perspective(0) rotate(0deg);
         height: 100%;
+    }
+    .note-modal {
+        width: 70%;
     }
     .add-note {
         order: -1;

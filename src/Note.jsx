@@ -10,6 +10,7 @@ const Note = ({
     text,
     date,
     editNote,
+    changeEditNote,
     saveNote,
     cancelEditingNote,
     noteEditMode,
@@ -26,7 +27,7 @@ const Note = ({
                 id={id}
                 title={title}
                 text={text}
-                changeEditNote={editNote}
+                changeEditNote={changeEditNote}
                 noteEditMode={noteEditMode}
                 saveNote={saveNote}
                 cancelEditingNote={cancelEditingNote}

@@ -15,7 +15,7 @@ class Notes extends React.Component {
         saveBtnOn: true,
         noteTitleError: false,
         noteTextError: false,
-        noteEditMode: { id: null, text: '', inModal: false, inList: false },
+        noteEditMode: { id: null, text: '', title: '', inModal: false, inList: false },
         deletedNotes: [],
         modalOn: false,
         noteInModal: {},
@@ -107,9 +107,10 @@ class Notes extends React.Component {
             return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
         }
     };
-    editNote = (id, text, type) => {
+    editNote = (id, title, text, type) => {
         const newEditNote = Object.assign({}, this.state.noteEditMode, {
             id,
+            title,
             text,
             inList: type === 'list',
             inModal: type === 'modal'
@@ -118,20 +119,34 @@ class Notes extends React.Component {
             noteEditMode: newEditNote
         });
     };
-    saveNote = (id, text) => {
+
+    changeEditNote = (id, value, type, propName) => {
+        const newEditNote = Object.assign({}, this.state.noteEditMode, {
+            id,
+            [propName]: value,
+            inList: type === 'list',
+            inModal: type === 'modal'
+        });
+        this.setState({
+            noteEditMode: newEditNote
+        });
+    };
+
+    saveNote = (id, text, title) => {
         const notes = [...this.state.notes];
         const note = notes.find(note => note.id === id);
-        note.text = text.trim();
+        note.text = text.trim() ? text.trim() : note.text;
+        note.title = title.trim() ? title.trim() : note.title;
         this.setState({
             notes,
-            noteEditMode: { id: null, text: '' },
+            noteEditMode: { id: null, text: '', title: '' },
             noteInModal: note
         });
     };
 
     cancelEditingNote = () => {
         this.setState({
-            noteEditMode: { id: null, text: '' }
+            noteEditMode: { id: null, text: '', title: '' }
         });
     };
 
@@ -194,6 +209,7 @@ class Notes extends React.Component {
                     editNote={this.editNote}
                     noteEditMode={this.state.noteEditMode}
                     saveNote={this.saveNote}
+                    changeEditNote={this.changeEditNote}
                     cancelEditingNote={this.cancelEditingNote}
                 />
             );
@@ -207,6 +223,7 @@ class Notes extends React.Component {
                             notes={this.mapNotesToNotesWithMode()}
                             noteEditMode={this.state.noteEditMode}
                             onEditNote={this.editNote}
+                            changeEditNote={this.changeEditNote}
                             saveNote={this.saveNote}
                             cancelEditingNote={this.cancelEditingNote}
                             deleteNote={this.deleteNote}
