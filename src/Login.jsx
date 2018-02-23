@@ -8,6 +8,7 @@ class Login extends React.Component {
     render() {
         return (
             <div className="signup-login-wrapper">
+                <h1 className="signup-login-title">Sign in to Note App</h1>
                 <div className="signup-login-form-wrapper">
                     <form>
                         <label htmlFor="username" className="signup-login-label">

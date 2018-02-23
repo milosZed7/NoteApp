@@ -3,6 +3,7 @@
     grid-template-columns: 1fr;
     grid-gap: 15px;
     transform: perspective(400px) rotateX(4deg);
+    transition: all 0.3s ease-in-out;
 }
 
 .signup-login-form-wrapper {
@@ -75,4 +76,24 @@
 .signup-login-btn.signup,
 .signup-login-btn.login {
     flex-grow: 2;
+}
+
+.signup-login-title {
+    color: #ccc;
+    background: #414141;
+    width: 100%;
+    text-align: start;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
+}
+
+@media all and (max-width: 500px) {
+    .signup-login-form-wrapper form {
+        width: 100%;
+    }
+    .signup-login-wrapper {
+        width: 100%;
+        transform: none;
+    }
 }
