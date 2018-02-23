@@ -28,7 +28,6 @@
     width: 500px;
     transform: perspective(400px) rotateX(4deg);
     transition: all 0.3s ease-in-out;
-    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 1);
 }
 
 .note-wrapper {
@@ -37,6 +36,8 @@
     height: 100%;
     display: flex;
     flex-flow: column;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
     /* border: 1px solid red; */
 }
 
