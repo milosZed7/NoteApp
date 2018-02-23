@@ -1,0 +1,37 @@
+.author-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    transform: perspective(400px) rotateX(4deg);
+    transition: all 0.3s ease-in-out;
+}
+
+.author-title {
+    color: #ccc;
+    background: #414141;
+    width: 100%;
+    text-align: start;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
+}
+
+.author-content {
+    width: 700px;
+    background: #414141;
+    color: #ccc;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
+}
+
+.author-img {
+    width: 46%;
+    float: left;
+    margin-right: 20px;
+}
+
+.author-text {
+    text-align: justify;
+}

@@ -9,7 +9,7 @@ const Menu = props => {
                 {props.isAdmin ? <Link to="users">Users</Link> : ''}
             </div>
             <div className="bottom-menu">
-                <Link to="/about">About Ahthor</Link>
+                <Link to="/author">About Ahthor</Link>
                 <Link to="logout">Sign out</Link>
             </div>
         </div>
