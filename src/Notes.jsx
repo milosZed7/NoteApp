@@ -4,7 +4,7 @@ import NoteList from './NoteList';
 import AddNote from './AddNote';
 import NoteModal from './NoteModal';
 import Menu from './Menu';
-
+import SearchNotes from './SearchNotes';
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
 
 class Notes extends React.Component {
@@ -221,6 +221,7 @@ class Notes extends React.Component {
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
                 <div className="note-component">
                     <div className="note-wrapper">
+                        <SearchNotes />
                         <NoteList
                             notes={this.mapNotesToNotesWithMode()}
                             noteEditMode={this.state.noteEditMode}
