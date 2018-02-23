@@ -1,10 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
-    redirectToLogin = () => {
-        this.props.history.push('/register');
-    };
-
     render() {
         return (
             <div className="signup-login-wrapper">
@@ -19,15 +16,15 @@ class Login extends React.Component {
                             Password
                         </label>
                         <input name="password" type="password" className="signup-login-input" />
-                        <button className="signup-login-btn login">Sign in</button>
+                        <button className="signup-login-btn">Sign in</button>
                     </form>
                 </div>
 
                 <div className="sign-up-wrapper">
                     <span>New to Note App?</span>
-                    <button className="signup-login-btn signup" onClick={this.redirectToLogin}>
+                    <Link className="signup-login-btn signup" to="/register">
                         Sign up
-                    </button>
+                    </Link>
                 </div>
             </div>
         );

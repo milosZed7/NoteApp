@@ -77,6 +77,10 @@
     animation: note-anim 0.4s ease-out;
 }
 
+.note {
+    cursor: pointer;
+}
+
 .note,
 .edit-note,
 .delete-note {

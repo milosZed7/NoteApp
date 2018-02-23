@@ -1,8 +1,9 @@
 import React from 'react';
+import { TransitionGroup } from 'react-transition-group';
 import NoteList from './NoteList';
 import AddNote from './AddNote';
 import NoteModal from './NoteModal';
-import { TransitionGroup } from 'react-transition-group';
+import Menu from './Menu';
 
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
 
@@ -216,6 +217,7 @@ class Notes extends React.Component {
         }
         return (
             <React.Fragment>
+                <Menu />
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
                 <div className="note-component">
                     <div className="note-wrapper">

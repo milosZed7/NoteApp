@@ -76,6 +76,10 @@
 .signup-login-btn.signup,
 .signup-login-btn.login {
     flex-grow: 2;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .signup-login-title {

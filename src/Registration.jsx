@@ -1,9 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Registration extends React.Component {
-    redirectToRegistration = () => {
-        this.props.history.push('/login');
-    };
     render() {
         return (
             <div className="signup-login-wrapper">
@@ -27,15 +25,15 @@ class Registration extends React.Component {
                             type="password"
                             className="signup-login-input"
                         />
-                        <button className="signup-login-btn signup">Sign up</button>
+                        <button className="signup-login-btn">Sign up</button>
                     </form>
                 </div>
 
                 <div className="sign-up-wrapper">
                     <span>Already have an account?</span>
-                    <button className="signup-login-btn login" onClick={this.redirectToRegistration}>
+                    <Link className="signup-login-btn login" to="/login">
                         Sign in
-                    </button>
+                    </Link>
                 </div>
             </div>
         );

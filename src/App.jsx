@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import './registration-login.css';
+import './menu.css';
 import Notes from './Notes';
 import Login from './Login';
 import Registration from './Registration';
