@@ -6,7 +6,7 @@ html {
     font-size: 100%;
     font: inherit;
     font-family: sans-serif;
-    background: goldenrod;
+    background: radial-gradient(ellipse at center, transparent, #414141);
     vertical-align: baseline;
     box-sizing: border-box;
 }
@@ -16,3 +16,6 @@ html {
 *::before {
     box-sizing: inherit;
 }
+
+
+/* #ffc600 */

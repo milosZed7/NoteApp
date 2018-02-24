@@ -17,7 +17,7 @@
 }
 
 .author-content {
-    width: 700px;
+    width: 500px;
     background: #414141;
     color: #ccc;
     font-size: 20px;
@@ -34,4 +34,13 @@
 
 .author-text {
     text-align: justify;
+}
+
+@media all and (max-width: 600px) {
+    .author-wrapper {
+        transform: none;
+    }
+    .author-content {
+        width: 100%;
+    }
 }

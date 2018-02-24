@@ -13,6 +13,7 @@ class Notes extends React.Component {
             { id: 1, text: 'first note', date: '14.02.2018.', title: 'Note title1' },
             { id: 2, text: 'second note', date: '14.02.2018.', title: 'Note title2' }
         ],
+        notesSearched: [],
         saveBtnOn: true,
         noteTitleError: false,
         noteTextError: false,
@@ -25,7 +26,8 @@ class Notes extends React.Component {
             text: '',
             date: '',
             id: ''
-        }
+        },
+        searchTerm: ''
     };
     resetNote = () => {
         return {
@@ -33,9 +35,10 @@ class Notes extends React.Component {
             text: ''
         };
     };
-
     mapNotesToNotesWithMode = () => {
-        const list = [...this.state.notes];
+        const list =
+            this.state.notesSearched.length || this.state.searchTerm ? [...this.state.notesSearched] : [...this.state.notes];
+        // console.log([...this.state.notesSearched], [...this.state.notes]);
         const { noteEditMode, deletedNotes } = this.state;
         return list.map(note => {
             let mode =
@@ -84,11 +87,13 @@ class Notes extends React.Component {
             newNote.date = getDate();
             newNote.id = genId.bind(this)();
             newNote.text = newNote.text.trim();
+            const newNotes = [newNote].concat(this.state.notes);
             this.setState({
                 newNote: this.resetNote(),
-                notes: [newNote].concat(this.state.notes),
+                notes: newNotes,
                 noteTextError: false,
-                noteTitleError: false
+                noteTitleError: false,
+                notesSearched: this.getUpdatedSearchList(this.state.searchTerm, newNotes)
             });
         }
 
@@ -141,7 +146,8 @@ class Notes extends React.Component {
         this.setState({
             notes,
             noteEditMode: { id: null, text: '', title: '' },
-            noteInModal: note
+            noteInModal: note,
+            notesSearched: this.getUpdatedSearchList(this.state.searchTerm)
         });
     };
 
@@ -154,7 +160,8 @@ class Notes extends React.Component {
     deleteNote = id => {
         const timeOutId = setTimeout(() => {
             this.setState({
-                notes: this.state.notes.filter(note => note.id !== id)
+                notes: this.state.notes.filter(note => note.id !== id),
+                notesSearched: this.state.notesSearched.filter(note => note.id !== id)
             });
         }, TIME_LEFT_TO_DELETE_NOTE);
 
@@ -200,6 +207,21 @@ class Notes extends React.Component {
             noteInModal: {}
         });
     };
+    setSearchTerm = term => {
+        const newNotes = this.getUpdatedSearchList(term);
+        this.setState({
+            searchTerm: term,
+            notesSearched: newNotes
+        });
+    };
+    getUpdatedSearchList = (term, notes) => {
+        let notesCopy = notes ? notes : [...this.state.notes];
+        const newNotes = notesCopy.filter(note => {
+            if (!term) return false;
+            return `${note.title} ${note.text}`.toLowerCase().indexOf(term.toLowerCase()) !== -1;
+        });
+        return newNotes;
+    };
     render() {
         let showNoteModal;
         if (this.state.modalOn) {
@@ -221,7 +243,7 @@ class Notes extends React.Component {
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
                 <div className="note-component">
                     <div className="note-wrapper">
-                        <SearchNotes />
+                        <SearchNotes setSearchTerm={this.setSearchTerm} />
                         <NoteList
                             notes={this.mapNotesToNotesWithMode()}
                             noteEditMode={this.state.noteEditMode}
