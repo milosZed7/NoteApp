@@ -1,5 +1,6 @@
 import React from 'react';
 import { TransitionGroup } from 'react-transition-group';
+import fire from './fire';
 import NoteList from './NoteList';
 import AddNote from './AddNote';
 import NoteModal from './NoteModal';
@@ -29,6 +30,18 @@ class Notes extends React.Component {
         },
         searchTerm: ''
     };
+    componentWillMount() {
+        let notesRef = fire
+            .database()
+            .ref('notes')
+            .orderByKey();
+        notesRef.on('child_added', snapshot => {
+            /* Update React state when message is added at Firebase Database */
+            let note = { text: snapshot.val(), id: snapshot.key };
+            console.log(note);
+            this.setState({ notes: [note.text].concat(this.state.notes) });
+        });
+    }
     resetNote = () => {
         return {
             title: '',
@@ -88,6 +101,10 @@ class Notes extends React.Component {
             newNote.id = genId.bind(this)();
             newNote.text = newNote.text.trim();
             const newNotes = [newNote].concat(this.state.notes);
+            fire
+                .database()
+                .ref('notes')
+                .push(newNote);
             this.setState({
                 newNote: this.resetNote(),
                 notes: newNotes,
