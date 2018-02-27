@@ -22,7 +22,7 @@
 .menu-wrapper::after {
     left: 150px;
     position: fixed;
-    top: calc(50% - 60px);
+    top: calc(50% - 30px);
     content: '||';
     border: 2px solid #F96816;
     border-left: none;
@@ -88,7 +88,7 @@
     }
     .menu-wrapper::after{
         top: calc(100% - 20px);
-        left: calc(50% - 19px);
+        left: calc(50% - 7.5px);
         transform: rotate(90deg);
     }
     .menu-wrapper:hover {
