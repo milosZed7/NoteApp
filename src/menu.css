@@ -12,6 +12,7 @@
     justify-content: space-between;
     transition: transform 0.3s ease-in-out;
     transform: translateX(-101%);
+    user-select: none;
 }
 
 .menu-wrapper:hover {
@@ -34,6 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .menu-wrapper:hover::after {
@@ -72,4 +74,24 @@
 .bottom-menu a:hover {
     background: rgb(250, 137, 72);
     color: white;
+}
+
+@media all and (max-width: 600px){
+    .menu-wrapper {
+        position: fixed;
+        height: auto;
+        width: 100%;
+        bottom: 100%;
+        left: 101%;
+        border: none;
+        border-bottom: 3px solid #F96816;
+    }
+    .menu-wrapper::after{
+        top: calc(100% - 20px);
+        left: calc(50% - 19px);
+        transform: rotate(90deg);
+    }
+    .menu-wrapper:hover {
+        transform: translateX(-101%) translateY(100%);
+    }
 }

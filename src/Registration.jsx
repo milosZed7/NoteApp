@@ -18,7 +18,13 @@ class Registration extends React.Component {
             .database()
             .ref('users')
             .push(this.state);
-        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+        fire
+            .auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .catch(err => {
+                console.log(err.message);
+            });
+
         this.props.history.push('/login');
     };
     render() {

@@ -383,7 +383,7 @@
 }
 
 .edit-note {
-    height: 100%;
+    height: 99%;
     width: calc(100% - 10px);
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -624,6 +624,10 @@
 
 @media all and (max-width: 600px),
 (max-height: 500px) {
+    .note-wrapper{
+        margin-top: 10px;
+        height: calc(100% - 10px);
+    }
     .note-component {
         width: 100%;
         transform: perspective(0) rotate(0deg);
