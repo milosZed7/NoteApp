@@ -7,7 +7,11 @@ class Registration extends React.Component {
     state = {
         username: '',
         password: '',
-        email: ''
+        email: '',
+        usernameError: false,
+        passwordError: false,
+        emailError: false,
+        registerError: false
     };
     inputChange = (name, value) => {
         this.setState({
@@ -15,23 +19,39 @@ class Registration extends React.Component {
         });
     };
     register = () => {
+        const { username, email, password } = this.state;
         fire
             .auth()
+            .signInWithCredential()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(({ uid }) => {
                 fire
                     .database()
                     .ref(`users/${uid}`)
-                    .set(this.state);
+                    .set({ username, email, password });
             })
             .catch(err => {
-                console.log(err.message);
+                console.log(err);
             });
 
-        this.props.history.push('/login');
+        this.validate();
+        //this.props.history.push('/login');
     };
 
-    validate = () => {};
+    validate = () => {
+        const { username, email, password } = this.state;
+        const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        const usernameError = !username.trim() || username.length < 8;
+        const passwordError = !password.trim() || password.length < 8;
+        const emailError = !email.match(emailRegex);
+        const registerError = username || passwordError || emailError;
+        this.setState({
+            emailError,
+            usernameError,
+            passwordError,
+            registerError
+        });
+    };
     render() {
         return (
             <React.Fragment>
@@ -52,20 +72,30 @@ class Registration extends React.Component {
                                     this.inputChange(evt.target.name, evt.target.value);
                                 }}
                             />
-                            <div className="signup-login-error">Username is invalid or already taken</div>
+                            {this.state.usernameError ? (
+                                <div className="signup-login-error">Username is invalid or already taken</div>
+                            ) : (
+                                ''
+                            )}
+
                             <label htmlFor="email" className="signup-login-label">
                                 Email
                             </label>
                             <input
                                 placeholder="you@example.com"
                                 name="email"
-                                type="text"
+                                type="email"
                                 className="signup-login-input"
                                 onChange={evt => {
                                     this.inputChange(evt.target.name, evt.target.value);
                                 }}
                             />
-                            <div className="signup-login-error">Email is invalid or already taken</div>
+                            {this.state.emailError ? (
+                                <div className="signup-login-error">Email is invalid or already taken</div>
+                            ) : (
+                                ''
+                            )}
+
                             <label htmlFor="password" className="signup-login-label">
                                 Password
                             </label>
@@ -78,7 +108,8 @@ class Registration extends React.Component {
                                     this.inputChange(evt.target.name, evt.target.value);
                                 }}
                             />
-                            <div className="signup-login-error">Password is invalid</div>
+                            {this.state.passwordError ? <div className="signup-login-error">Password is invalid</div> : ''}
+
                             <button
                                 className="signup-login-btn"
                                 onClick={evt => {

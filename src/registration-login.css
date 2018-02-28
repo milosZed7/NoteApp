@@ -1,6 +1,6 @@
 .signup-login-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
+    /* display: grid;
+    grid-template-columns: 1fr; */
     grid-gap: 15px;
     transform: perspective(400px) rotateX(4deg);
     transition: all 0.3s ease-in-out;
@@ -23,6 +23,15 @@
     /* grid-auto-rows: 0.5fr 1fr; */
 }
 
+.signup-login-form-wrapper form>* {
+    width: 100%;
+    text-align: start;
+}
+
+.signup-login-form-wrapper form :last-child {
+    text-align: center;
+}
+
 .signup-login-label {
     justify-self: start;
 }
@@ -42,7 +51,6 @@
 .signup-login-btn {
     margin-top: 10px;
     transition: opacity 0.2s ease-in;
-    box-sizing: content-box;
     height: 45px;
     font-size: 20px;
     background: #F96816;
@@ -72,12 +80,13 @@
     align-self: center;
     display: block;
     padding-right: 10px;
+    flex: 1 1 20%;
 }
 
 .signup-login-btn.signup,
 .signup-login-btn.login {
     margin-top: 0;
-    flex-grow: 2;
+    flex-grow: 1;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -88,12 +97,13 @@
     color: #ccc;
     background: #414141;
     width: 100%;
-    text-align: start;
+    text-align: center;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
 }
-.signup-login-error{
+
+.signup-login-error {
     color: #ff5252;
     text-align: start;
 }
