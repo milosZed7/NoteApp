@@ -1,0 +1,37 @@
+.notification-wrapper{
+    position: fixed;
+    right: 50px;
+    top: 50px;
+    height: 50px;
+    min-width: 64px;
+    font-size: 18px;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+}
+.notification-wrapper > div{
+    padding-left: 20px;
+}
+.notification-wrapper-success{
+    background: #00bfa5;
+}
+
+.notification-wrapper-error::after{
+    position: absolute;
+    background: white;
+    content: 'x';
+    color:#ff5252;
+    left: 2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    font-weight: bolder;
+}
+
+.notification-wrapper-error{
+    background: #ff5252;
+}

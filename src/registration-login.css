@@ -20,7 +20,7 @@
     display: grid;
     grid-gap: 5px;
     grid-template-columns: 1fr;
-    grid-auto-rows: 0.5fr 1fr;
+    /* grid-auto-rows: 0.5fr 1fr; */
 }
 
 .signup-login-label {
@@ -40,6 +40,7 @@
 }
 
 .signup-login-btn {
+    margin-top: 10px;
     transition: opacity 0.2s ease-in;
     box-sizing: content-box;
     height: 45px;
@@ -75,6 +76,7 @@
 
 .signup-login-btn.signup,
 .signup-login-btn.login {
+    margin-top: 0;
     flex-grow: 2;
     text-decoration: none;
     display: flex;
@@ -90,6 +92,10 @@
     padding: 10px;
     border-radius: 5px;
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 1);
+}
+.signup-login-error{
+    color: #ff5252;
+    text-align: start;
 }
 
 @media all and (max-width: 500px) {
