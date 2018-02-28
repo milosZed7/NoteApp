@@ -9,7 +9,7 @@ class Login extends React.Component {
                 <div className="signup-login-form-wrapper">
                     <form>
                         <label htmlFor="username" className="signup-login-label">
-                            Username or email
+                            Email
                         </label>
                         <input name="username" type="text" className="signup-login-input" />
                         <label htmlFor="password" className="signup-login-label">
