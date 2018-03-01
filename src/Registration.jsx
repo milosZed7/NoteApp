@@ -22,8 +22,7 @@ class Registration extends React.Component {
         if (error.passwordError || error.emailError) {
             this.setState({
                 emailError: error.emailError,
-                passwordError: error.passwordError,
-                registerError: true
+                passwordError: error.passwordError
             });
             return;
         }

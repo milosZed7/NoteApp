@@ -22,11 +22,11 @@
     background: #00bfa5;
 }
 
-.notification-wrapper-error::after {
+.notification-wrapper-error::after,
+.notification-wrapper-success::after {
     position: absolute;
     background: white;
-    content: 'x';
-    color: #ff5252;
+    
     left: 5px;
     height: 20px;
     width: 20px;
@@ -34,6 +34,14 @@
     font-weight: bolder;
 }
 
+.notification-wrapper-error::after{
+    content: 'x';
+    color: #ff5252;
+}
+.notification-wrapper-success::after{
+    content: '✓';
+    color: #00bfa5;
+}
 .notification-wrapper-error {
     background: #ff5252;
 }
