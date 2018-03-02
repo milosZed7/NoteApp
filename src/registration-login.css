@@ -1,6 +1,6 @@
 .signup-login-wrapper {
-    /* display: grid;
-    grid-template-columns: 1fr; */
+    display: grid;
+    grid-template-columns: 1fr;
     grid-gap: 15px;
     transform: perspective(400px) rotateX(4deg);
     transition: all 0.3s ease-in-out;

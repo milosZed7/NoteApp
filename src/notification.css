@@ -12,6 +12,7 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 1);
+    animation: fadeIn 0.3s ease-in-out forwards;
 }
 
 .notification-wrapper>div {
@@ -22,11 +23,31 @@
     background: #00bfa5;
 }
 
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.notification-wrapper-fade-out{
+    animation: fadeOut 0.3s ease-in-out forwards;
+}
+@keyframes fadeOut{
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+}
+
 .notification-wrapper-error::after,
 .notification-wrapper-success::after {
     position: absolute;
     background: white;
-    
+    text-align: center;
     left: 5px;
     height: 20px;
     width: 20px;

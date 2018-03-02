@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import fire from './fire';
-import Notification from './Notification';
+import notify from './NotificationManager';
 
 class Registration extends React.Component {
     state = {
         password: '',
         email: '',
         passwordError: false,
-        emailError: false,
-        serverMessage: ''
+        emailError: false
     };
     inputChange = (name, value) => {
         this.setState({
@@ -33,9 +32,9 @@ class Registration extends React.Component {
             .catch(err => {
                 this.setState({
                     emailError: false,
-                    passwordError: false,
-                    serverMessage: err.message
+                    passwordError: false
                 });
+                notify('error', err.message, 5000);
             });
 
         //this.props.history.push('/login');
@@ -51,12 +50,6 @@ class Registration extends React.Component {
     render() {
         return (
             <React.Fragment>
-                {this.state.serverMessage ? (
-                    <Notification type="error" description={this.state.serverMessage} time={1000} />
-                ) : (
-                    ''
-                )}
-
                 <div className="signup-login-wrapper">
                     <h1 className="signup-login-title">Join Note App</h1>
                     <div className="signup-login-form-wrapper">
