@@ -30,6 +30,7 @@ class Notes extends React.Component {
     componentWillMount() {
         let notesRef = fire.database().ref(`notes/${getUserUid()}`);
         let notes = [];
+
         notesRef.once('value', snapshot => {
             snapshot.forEach(chidlSnap => {
                 let chidlKey = chidlSnap.key;
@@ -83,7 +84,6 @@ class Notes extends React.Component {
             notify('error', 'Both field must be filled.', 4000);
             return;
         }
-
         fire
             .database()
             .ref(`notes/${getUserUid()}`)
@@ -97,7 +97,8 @@ class Notes extends React.Component {
                     notes: newNotes,
                     notesSearched: this.getUpdatedSearchList(this.state.searchTerm, newNotes)
                 });
-            });
+            })
+            .catch(err => notify('error', 'Both field must be filled.', 4000));
 
         function getDate() {
             const date = new Date();

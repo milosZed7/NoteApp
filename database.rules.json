@@ -1,6 +1,38 @@
 {
     "rules": {
-        ".read": true,
-        ".write": true
+        "users": {
+            "$uid": {
+                ".read": "$uid === auth.uid",
+                ".write": "$uid === auth.uid",
+                ".validate": "newData.hasChildren(['username'])",
+                "username": {
+                    ".validate": "newData.isString() && newData.val().length >= 6"
+                },
+                "$other": {
+                    ".validate": false
+                }
+            }
+        },
+        "notes": {
+            "$uid": {
+                ".read": "$uid === auth.uid",
+                "$key": {
+                    ".write": "$uid === auth.uid",
+                    ".validate": "newData.hasChildren(['text','date','title'])",
+                    "text": {
+                        ".validate": "newData.isString() && newData.val().length > 0"
+                    },
+                    "title": {
+                        ".validate": "newData.isString() && newData.val().length > 0"
+                    },
+                    "date": {
+                        ".validate": "newData.isString() && newData.val().length > 0"
+                    },
+                    "$other": {
+                        ".validate": false
+                    }
+                }
+            }
+        }
     }
 }
