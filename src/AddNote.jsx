@@ -5,6 +5,24 @@ const AddNote = props => {
     const ballTranslateClass = !props.saveBtnOn ? 'translate-ball' : '';
     const opacitySaveBtnClass = !props.saveBtnOn ? 'add-note-btn-opacity' : '';
     const translateNoteInputClass = !props.saveBtnOn ? 'note-input-translate' : '';
+    const onChange = evt => {
+        let value = evt.target.value;
+        const name = evt.target.name;
+        if (props.saveBtnOn) {
+            value = evt.target.value.replace(/(\r\n|\n|\r)/gm, '');
+        }
+        props.noteTitleTextChange(name, value);
+    };
+
+    const showSaveBtn = evt => {
+        if (evt.button !== 0) return;
+        props.showSaveBtn();
+    };
+    const addNote = evt => {
+        if ((props.saveBtnOn && evt.keyCode === 13) || evt.button === 0) {
+            props.addNote();
+        }
+    };
     return (
         <div className={`add-note`}>
             <input
@@ -12,36 +30,28 @@ const AddNote = props => {
                 className="note-input-title"
                 placeholder="Note title"
                 maxLength="50"
+                name="title"
                 value={props.note.title}
-                onChange={props.noteTitleChange}
+                onChange={onChange}
             />
             <textarea
                 className={`note-input-text transition-margin ${translateNoteInputClass}`}
                 placeholder="Add a note..."
+                name="text"
                 value={props.note.text}
-                onKeyUp={props.addNote}
-                onChange={props.noteTextChange}
+                onKeyUp={addNote}
+                onChange={onChange}
             />
-            <button className={`add-note-btn ${opacitySaveBtnClass}`} onClick={props.addNote}>
-                Save note
+            <button className={`add-note-btn ${opacitySaveBtnClass}`} onClick={addNote}>
+                Add note
             </button>
             <div className="save-type">
                 <div className="press-enter">
-                    Press <span>enter</span> to save
+                    Press <span>enter</span> to add
                 </div>
-                <div className={`off-on-btn ${btnClickedClass}`} onClick={props.showSaveBtn}>
+                <div className={`off-on-btn ${btnClickedClass}`} onClick={showSaveBtn}>
                     <div className={`ball ${ballTranslateClass}`} />
                 </div>
-            </div>
-            <div
-                className={`note-title-error ${props.noteTitleError ? 'note-title-error-show' : ''}`}
-                onAnimationEnd={props.errorAnimationEnd}>
-                Title empty
-            </div>
-            <div
-                className={`note-text-error ${props.noteTextError ? 'note-text-error-show' : ''}`}
-                onAnimationEnd={props.errorAnimationEnd}>
-                Note content empty
             </div>
         </div>
     );

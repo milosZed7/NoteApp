@@ -6,18 +6,16 @@ import AddNote from './AddNote';
 import NoteModal from './NoteModal';
 import Menu from './Menu';
 import SearchNotes from './SearchNotes';
+import { getUserUid } from './LocalStorageApi';
+import notify from './NotificationManager';
+
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
 
 class Notes extends React.Component {
     state = {
-        notes: [
-            { id: 1, text: 'first note', date: '14.02.2018.', title: 'Note title1' },
-            { id: 2, text: 'second note', date: '14.02.2018.', title: 'Note title2' }
-        ],
+        notes: [],
         notesSearched: [],
         saveBtnOn: true,
-        noteTitleError: false,
-        noteTextError: false,
         noteEditMode: { id: null, text: '', title: '', inModal: false, inList: false },
         deletedNotes: [],
         modalOn: false,
@@ -25,21 +23,21 @@ class Notes extends React.Component {
         newNote: {
             title: '',
             text: '',
-            date: '',
-            id: ''
+            date: ''
         },
         searchTerm: ''
     };
     componentWillMount() {
-        let notesRef = fire
-            .database()
-            .ref('notes')
-            .orderByKey();
-        notesRef.on('child_added', snapshot => {
-            /* Update React state when message is added at Firebase Database */
-            let note = { text: snapshot.val(), id: snapshot.key };
-            console.log(note);
-            this.setState({ notes: [note.text].concat(this.state.notes) });
+        let notesRef = fire.database().ref(`notes/${getUserUid()}`);
+        let notes = [];
+        notesRef.once('value', snapshot => {
+            snapshot.forEach(chidlSnap => {
+                let chidlKey = chidlSnap.key;
+                let childData = chidlSnap.val();
+                let note = { text: childData.text, title: childData.title, date: childData.date, id: chidlKey };
+                notes.push(note);
+            });
+            this.setState({ notes });
         });
     }
     resetNote = () => {
@@ -51,7 +49,6 @@ class Notes extends React.Component {
     mapNotesToNotesWithMode = () => {
         const list =
             this.state.notesSearched.length || this.state.searchTerm ? [...this.state.notesSearched] : [...this.state.notes];
-        // console.log([...this.state.notesSearched], [...this.state.notes]);
         const { noteEditMode, deletedNotes } = this.state;
         return list.map(note => {
             let mode =
@@ -63,64 +60,44 @@ class Notes extends React.Component {
         });
     };
 
-    showSaveBtn = evt => {
-        if (evt.button !== 0) return;
+    showSaveBtn = () => {
         this.setState({
             saveBtnOn: !this.state.saveBtnOn
         });
     };
 
-    noteTextChange = evt => {
+    noteTitleTextChange = (name, value) => {
         this.setState({
-            newNote: Object.assign({}, this.state.newNote, { text: evt.target.value })
+            newNote: Object.assign({}, this.state.newNote, { [name]: value })
         });
     };
-    noteTitleChange = evt => {
-        this.setState({
-            newNote: Object.assign({}, this.state.newNote, { title: evt.target.value })
-        });
-    };
+
     addNote = evt => {
-        if ((this.state.saveBtnOn && evt.keyCode === 13) || evt.button === 0) {
-            const newNote = Object.assign({}, this.state.newNote);
-            const titleEmpty = !newNote.title.trim();
-            const textEmpty = !newNote.text.trim();
-            if (titleEmpty || textEmpty) {
+        const newNote = Object.assign({}, this.state.newNote);
+        newNote.date = getDate();
+        newNote.text = newNote.text.trim();
+
+        const titleEmpty = !newNote.title.trim();
+        const textEmpty = !newNote.text.trim();
+        if (titleEmpty || textEmpty) {
+            notify('error', 'Both field must be filled.', 4000);
+            return;
+        }
+
+        fire
+            .database()
+            .ref(`notes/${getUserUid()}`)
+            .push(newNote)
+            .then(data => {
+                newNote.id = data.key;
+                const newNotes = [newNote].concat(this.state.notes);
+                notify('success', `${newNote.title} added.`, 2000);
                 this.setState({
-                    newNote: {
-                        title: titleEmpty ? '' : newNote.title,
-                        text: textEmpty ? '' : newNote.text
-                    },
-                    noteTextError: textEmpty,
-                    noteTitleError: titleEmpty
+                    newNote: this.resetNote(),
+                    notes: newNotes,
+                    notesSearched: this.getUpdatedSearchList(this.state.searchTerm, newNotes)
                 });
-                return;
-            }
-
-            newNote.date = getDate();
-            newNote.id = genId.bind(this)();
-            newNote.text = newNote.text.trim();
-            const newNotes = [newNote].concat(this.state.notes);
-            fire
-                .database()
-                .ref('notes')
-                .push(newNote);
-            this.setState({
-                newNote: this.resetNote(),
-                notes: newNotes,
-                noteTextError: false,
-                noteTitleError: false,
-                notesSearched: this.getUpdatedSearchList(this.state.searchTerm, newNotes)
             });
-        }
-
-        function genId() {
-            let number = Math.floor(Math.random() * 900);
-            if (this.state.notes.some(note => note.id === number)) {
-                number = genId.bind(this)();
-            }
-            return number;
-        }
 
         function getDate() {
             const date = new Date();
@@ -197,20 +174,7 @@ class Notes extends React.Component {
             deletedNotes: this.state.deletedNotes.filter(note => note.id !== undoId)
         });
     };
-    errorAnimationEnd = evt => {
-        if (evt.animationName !== 'show-error') return;
-        const classList = evt.target.classList;
 
-        if (classList.contains('note-text-error')) {
-            this.setState({
-                noteTextError: false
-            });
-        } else if (classList.contains('note-title-error')) {
-            this.setState({
-                noteTitleError: false
-            });
-        }
-    };
     showModal = note => {
         this.setState({
             modalOn: true,
@@ -256,7 +220,7 @@ class Notes extends React.Component {
         }
         return (
             <React.Fragment>
-                <Menu />
+                <Menu {...this.props} />
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
                 <div className="note-component">
                     <div className="note-wrapper">
@@ -277,10 +241,7 @@ class Notes extends React.Component {
                             saveBtnOn={this.state.saveBtnOn}
                             note={this.state.newNote}
                             addNote={this.addNote}
-                            noteTitleChange={this.noteTitleChange}
-                            noteTextChange={this.noteTextChange}
-                            noteTextError={this.state.noteTextError}
-                            noteTitleError={this.state.noteTitleError}
+                            noteTitleTextChange={this.noteTitleTextChange}
                             errorAnimationEnd={this.errorAnimationEnd}
                         />
                     </div>

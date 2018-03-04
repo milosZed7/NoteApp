@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import fire from './fire';
 import notify from './NotificationManager';
-
+import { getUserUid } from './LocalStorageApi';
 class Registration extends React.Component {
     state = {
         password: '',
@@ -10,6 +10,10 @@ class Registration extends React.Component {
         passwordError: false,
         emailError: false
     };
+    componentWillMount() {
+        const user = getUserUid();
+        user && this.props.history.push('/');
+    }
     inputChange = (name, value) => {
         this.setState({
             [name]: value
@@ -29,6 +33,9 @@ class Registration extends React.Component {
         fire
             .auth()
             .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                this.props.history.push('/login', { notification: true });
+            })
             .catch(err => {
                 this.setState({
                     emailError: false,
@@ -36,8 +43,6 @@ class Registration extends React.Component {
                 });
                 notify('error', err.message, 5000);
             });
-
-        //this.props.history.push('/login');
     };
 
     validate = () => {

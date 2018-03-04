@@ -521,6 +521,7 @@
 }
 
 .note-modal-text {
+    white-space: pre-wrap;
     width: 100%;
     overflow-wrap: break-word;
     overflow-y: auto;
@@ -624,7 +625,7 @@
 
 @media all and (max-width: 600px),
 (max-height: 500px) {
-    .note-wrapper{
+    .note-wrapper {
         margin-top: 10px;
         height: calc(100% - 10px);
     }

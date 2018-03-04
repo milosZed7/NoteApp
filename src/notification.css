@@ -12,7 +12,7 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 1);
-    animation: fadeIn 0.3s ease-in-out forwards;
+    animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 .notification-wrapper>div {
@@ -23,22 +23,24 @@
     background: #00bfa5;
 }
 
-@keyframes fadeIn{
-    from{
+@keyframes fadeIn {
+    from {
         opacity: 0;
     }
-    to{
+    to {
         opacity: 1;
     }
 }
-.notification-wrapper-fade-out{
-    animation: fadeOut 0.3s ease-in-out forwards;
+
+.notification-wrapper-fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
 }
-@keyframes fadeOut{
-    from{
+
+@keyframes fadeOut {
+    from {
         opacity: 1;
     }
-    to{
+    to {
         opacity: 0;
     }
 }
@@ -48,21 +50,23 @@
     position: absolute;
     background: white;
     text-align: center;
-    left: 5px;
+    left: 15px;
     height: 20px;
     width: 20px;
     border-radius: 50%;
     font-weight: bolder;
 }
 
-.notification-wrapper-error::after{
+.notification-wrapper-error::after {
     content: 'x';
     color: #ff5252;
 }
-.notification-wrapper-success::after{
+
+.notification-wrapper-success::after {
     content: '✓';
     color: #00bfa5;
 }
+
 .notification-wrapper-error {
     background: #ff5252;
 }

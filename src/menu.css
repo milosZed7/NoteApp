@@ -60,7 +60,9 @@
 }
 
 .top-menu a,
-.bottom-menu a {
+.top-menu div,
+.bottom-menu a,
+.bottom-menu div {
     border: 1px solid #F96816;
     padding: 10px;
     background: #F96816;
@@ -71,12 +73,14 @@
 }
 
 .top-menu a:hover,
-.bottom-menu a:hover {
+.bottom-menu a:hover,
+.top-menu div:hover,
+.bottom-menu div:hover {
     background: rgb(250, 137, 72);
     color: white;
 }
 
-@media all and (max-width: 600px){
+@media all and (max-width: 600px) {
     .menu-wrapper {
         position: fixed;
         height: auto;
@@ -86,7 +90,7 @@
         border: none;
         border-bottom: 3px solid #F96816;
     }
-    .menu-wrapper::after{
+    .menu-wrapper::after {
         top: calc(100% - 20px);
         left: calc(50% - 7.5px);
         transform: rotate(90deg);

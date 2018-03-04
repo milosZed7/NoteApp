@@ -1,7 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import fire from './fire';
+import { removeUserUid } from './LocalStorageApi';
 
 const Menu = props => {
+    const signOut = () => {
+        fire
+            .auth()
+            .signOut()
+            .then(() => {
+                removeUserUid();
+                props.history.push('/login');
+            });
+    };
     return (
         <div className="menu-wrapper">
             <div className="top-menu">
@@ -10,7 +21,7 @@ const Menu = props => {
             </div>
             <div className="bottom-menu">
                 <Link to="/author">About Ahthor</Link>
-                <Link to="logout">Sign out</Link>
+                <div onClick={signOut}>Sign out</div>
             </div>
         </div>
     );
