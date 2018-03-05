@@ -465,7 +465,7 @@
 
 .note-modal {
     position: relative;
-    width: 70vh;
+    width: 550px;
     height: 300px;
     background: #363636;
     padding: 20px;
@@ -656,8 +656,14 @@
     }
 }
 
+@media all and (max-width: 600px) {
+    .note-modal {
+        width: 98%;
+    }
+}
 @media all and (max-width: 400px) {
     .note-content .title {
         width: 100px;
     }
 }
+
