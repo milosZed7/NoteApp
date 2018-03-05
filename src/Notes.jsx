@@ -10,6 +10,9 @@ import { getUserUid } from './LocalStorageApi';
 import notify from './NotificationManager';
 
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
+const ADD_NOTE_ERROR_MESSAGE = 'Both Note Title and Note Text must be filled.';
+const NOTE_DELETED = 'Note successfully deleted.';
+const NOTE_EDITE = 'Note successfully edited';
 
 class Notes extends React.Component {
     state = {
@@ -81,7 +84,7 @@ class Notes extends React.Component {
         const titleEmpty = !newNote.title.trim();
         const textEmpty = !newNote.text.trim();
         if (titleEmpty || textEmpty) {
-            notify('error', 'Both field must be filled.', 4000);
+            notify('error', ADD_NOTE_ERROR_MESSAGE, 4000);
             return;
         }
         fire
@@ -98,7 +101,7 @@ class Notes extends React.Component {
                     notesSearched: this.getUpdatedSearchList(this.state.searchTerm, newNotes)
                 });
             })
-            .catch(err => notify('error', 'Both field must be filled.', 4000));
+            .catch(err => notify('error', ADD_NOTE_ERROR_MESSAGE, 4000));
 
         function getDate() {
             const date = new Date();
@@ -138,12 +141,20 @@ class Notes extends React.Component {
         const note = notes.find(note => note.id === id);
         note.text = text.trim() ? text.trim() : note.text;
         note.title = title.trim() ? title.trim() : note.title;
-        this.setState({
-            notes,
-            noteEditMode: { id: null, text: '', title: '' },
-            noteInModal: note,
-            notesSearched: this.getUpdatedSearchList(this.state.searchTerm)
-        });
+        fire
+            .database()
+            .ref(`notes/${getUserUid()}/${note.id}`)
+            .set({ text: note.text, title: note.title, date: note.date })
+            .then(() => {
+                this.setState({
+                    notes,
+                    noteEditMode: { id: null, text: '', title: '' },
+                    noteInModal: note,
+                    notesSearched: this.getUpdatedSearchList(this.state.searchTerm)
+                });
+                notify('success', NOTE_EDITE);
+            })
+            .catch(err => notify('error', err.message, 4000));
     };
 
     cancelEditingNote = () => {
@@ -154,10 +165,20 @@ class Notes extends React.Component {
 
     deleteNote = id => {
         const timeOutId = setTimeout(() => {
-            this.setState({
-                notes: this.state.notes.filter(note => note.id !== id),
-                notesSearched: this.state.notesSearched.filter(note => note.id !== id)
-            });
+            fire
+                .database()
+                .ref(`notes/${getUserUid()}/${id}`)
+                .remove()
+                .then(() => {
+                    this.setState({
+                        notes: this.state.notes.filter(note => note.id !== id),
+                        notesSearched: this.state.notesSearched.filter(note => note.id !== id)
+                    });
+                    notify('success', NOTE_DELETED, 2000);
+                })
+                .catch(err => {
+                    notify('error', err.message);
+                });
         }, TIME_LEFT_TO_DELETE_NOTE);
 
         const note = {

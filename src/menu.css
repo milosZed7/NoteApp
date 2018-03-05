@@ -29,7 +29,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     background: #414141;
-    width: 15px;
+    width: 30px;
     height: 60px;
     color: #ccc;
     display: flex;
@@ -80,7 +80,7 @@
     color: white;
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 600px),(max-height: 500px)  {
     .menu-wrapper {
         position: fixed;
         height: auto;
@@ -91,8 +91,8 @@
         border-bottom: 3px solid #F96816;
     }
     .menu-wrapper::after {
-        top: calc(100% - 20px);
-        left: calc(50% - 7.5px);
+        top: calc(100% - 12px);
+        left: calc(50% - 15px);
         transform: rotate(90deg);
     }
     .menu-wrapper:hover {

@@ -27,7 +27,7 @@ const AddNote = props => {
         <div className={`add-note`}>
             <input
                 type="text"
-                className="note-input-title"
+                className={`note-input-title`}
                 placeholder="Note title"
                 maxLength="50"
                 name="title"
@@ -35,7 +35,7 @@ const AddNote = props => {
                 onChange={onChange}
             />
             <textarea
-                className={`note-input-text transition-margin ${translateNoteInputClass}`}
+                className={`note-input-text transition-margin ${translateNoteInputClass} `}
                 placeholder="Add a note..."
                 name="text"
                 value={props.note.text}
