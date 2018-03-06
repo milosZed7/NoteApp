@@ -4,7 +4,6 @@ import fire from './fire';
 import NoteList from './NoteList';
 import AddNote from './AddNote';
 import NoteModal from './NoteModal';
-import Menu from './Menu';
 import SearchNotes from './SearchNotes';
 import { getUserUid } from './LocalStorageApi';
 import notify from './NotificationManager';
@@ -242,7 +241,6 @@ class Notes extends React.Component {
         }
         return (
             <React.Fragment>
-                <Menu {...this.props} />
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
                 <div className="note-component">
                     <div className="note-wrapper">

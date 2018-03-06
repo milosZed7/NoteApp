@@ -9,25 +9,24 @@ import Login from './Login';
 import Registration from './Registration';
 import AboutAuthor from './AboutAuthor';
 import PrivateRoute from './PrivateRoute';
-
+import WithMenu from './WithMenu';
+import WithoutMenu from './WithoutMenu';
 const fourOFour = () => <h1>404</h1>;
 
 const App = () => {
     return (
         <BrowserRouter>
-            <div className="App">
-                <Switch>
-                    <PrivateRoute exact path="/" component={Notes} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Registration} />
-                    <PrivateRoute exact path="/author" component={AboutAuthor} />
-                    <Redirect from="/about" to="/author" />
-                    <Redirect from="/aboutAuthor" to="/author" />
-                    <Redirect from="/home" to="/" />
-                    <Redirect from="/notes" to="/" />
-                    <Route component={fourOFour} />
-                </Switch>
-            </div>
+            <Switch>
+                <PrivateRoute exact path="/" component={WithMenu(Notes)} />
+                <Route exact path="/login" component={WithoutMenu(Login)} />
+                <Route exact path="/register" component={WithoutMenu(Registration)} />
+                <PrivateRoute exact path="/author" component={WithMenu(AboutAuthor)} />
+                <Redirect from="/about" to="/author" />
+                <Redirect from="/aboutAuthor" to="/author" />
+                <Redirect from="/home" to="/" />
+                <Redirect from="/notes" to="/" />
+                <Route component={fourOFour} />
+            </Switch>
         </BrowserRouter>
     );
 };

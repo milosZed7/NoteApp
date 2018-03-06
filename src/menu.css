@@ -13,6 +13,7 @@
     transition: transform 0.3s ease-in-out;
     transform: translateX(-101%);
     user-select: none;
+    text-align: center;
 }
 
 .menu-wrapper:hover {
@@ -80,7 +81,8 @@
     color: white;
 }
 
-@media all and (max-width: 600px),(max-height: 500px)  {
+@media all and (max-width: 600px),
+(max-height: 500px) {
     .menu-wrapper {
         position: fixed;
         height: auto;

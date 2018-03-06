@@ -17,5 +17,9 @@ html {
     box-sizing: inherit;
 }
 
+#root {
+    overflow: hidden;
+}
+
 
 /* #ffc600 */
