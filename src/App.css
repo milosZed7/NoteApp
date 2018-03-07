@@ -573,11 +573,9 @@
 /* Search notes */
 
 .search-note-wrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    display: grid;
     margin: 5px;
+    grid-template-columns: 3fr 3fr 0.7fr;
 }
 
 .note-input-text.note-search {
@@ -586,19 +584,34 @@
     border-radius: 0;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    flex: 2 1;
 }
-
+.note-input-text.note-search.note-search-by-title-text{
+    grid-column: span 2; 
+}
+.note-input-text.note-search.note-search-date-to{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
 .search-icon {
-    width: 30px;
-    height: 40px;
-    display: block;
-    padding: 0 10px;
+    /* position: relative; */
+    grid-row:span 2;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    margin-right: 10px;
     background: #F96816;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.search-icon:hover{
+    background: rgb(250, 137, 72);
+}
+.search-icon > div {
+    /* position: absolute; */
+    transform: rotate(45deg);
+    user-select: none;
+    font-size: 20px;
+
 }
 
 

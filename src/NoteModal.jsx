@@ -40,7 +40,7 @@ const NoteModal = ({ saveNote, cancelEditingNote, noteEditMode, editNote, note, 
                     )}
                     <div className="note-modal-date">{note.date}</div>
                     <div className="close-modal" onClick={closeModal}>
-                        x
+                        ✖
                     </div>
                 </div>
             </CSSTransition>

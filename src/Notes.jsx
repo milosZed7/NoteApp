@@ -27,7 +27,9 @@ class Notes extends React.Component {
             text: '',
             date: ''
         },
-        searchTerm: ''
+        searchTerm: '',
+        searchDateFrom: '',
+        searchDateTo: ''
     };
     componentWillMount() {
         let notesRef = fire.database().ref(`notes/${getUserUid()}`);
@@ -209,6 +211,13 @@ class Notes extends React.Component {
             noteInModal: {}
         });
     };
+    resetSearch = () => {
+        this.setState({
+            searchTerm: '',
+            searchDateTo: '',
+            searchDateFrrom: ''
+        });
+    };
     setSearchTerm = term => {
         const newNotes = this.getUpdatedSearchList(term);
         this.setState({
@@ -244,7 +253,13 @@ class Notes extends React.Component {
                 <TransitionGroup> {showNoteModal}</TransitionGroup>
                 <div className="note-component">
                     <div className="note-wrapper">
-                        <SearchNotes setSearchTerm={this.setSearchTerm} />
+                        <SearchNotes
+                            searchTerm={this.state.searchTerm}
+                            searchDateFrom={this.state.searchDateFrom}
+                            searchDateTo={this.state.searchDateTo}
+                            setSearchTerm={this.setSearchTerm}
+                            resetSearch={this.resetSearch}
+                        />
                         <NoteList
                             notes={this.mapNotesToNotesWithMode()}
                             noteEditMode={this.state.noteEditMode}
