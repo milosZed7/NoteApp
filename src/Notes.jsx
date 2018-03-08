@@ -7,6 +7,7 @@ import NoteModal from './NoteModal';
 import SearchNotes from './SearchNotes';
 import { getUserUid } from './LocalStorageApi';
 import notify from './NotificationManager';
+import time from './ServerDateTime';
 
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
 const ADD_NOTE_ERROR_MESSAGE = 'Both Note Title and Note Text must be filled.';
@@ -32,16 +33,25 @@ class Notes extends React.Component {
         searchDateTo: ''
     };
     componentWillMount() {
-        let notesRef = fire.database().ref(`notes/${getUserUid()}`);
+        let notesRef = fire
+            .database()
+            .ref(`notes/${getUserUid()}`)
+            .orderByChild('date');
         let notes = [];
 
         notesRef.once('value', snapshot => {
             snapshot.forEach(chidlSnap => {
                 let chidlKey = chidlSnap.key;
                 let childData = chidlSnap.val();
-                let note = { text: childData.text, title: childData.title, date: childData.date, id: chidlKey };
+                let note = {
+                    text: childData.text,
+                    title: childData.title,
+                    date: this.getDate(childData.date),
+                    id: chidlKey
+                };
                 notes.push(note);
             });
+            notes.reverse();
             this.setState({ notes });
         });
     }
@@ -76,12 +86,16 @@ class Notes extends React.Component {
             newNote: Object.assign({}, this.state.newNote, { [name]: value })
         });
     };
-
+    getDate(timestamp) {
+        const date = new Date(timestamp);
+        const day = date.getDate();
+        const mounth = date.getMonth() + 1;
+        const year = date.getFullYear();
+        return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
+    }
     addNote = evt => {
         const newNote = Object.assign({}, this.state.newNote);
-        newNote.date = getDate();
         newNote.text = newNote.text.trim();
-
         const titleEmpty = !newNote.title.trim();
         const textEmpty = !newNote.text.trim();
         if (titleEmpty || textEmpty) {
@@ -91,9 +105,21 @@ class Notes extends React.Component {
         fire
             .database()
             .ref(`notes/${getUserUid()}`)
-            .push(newNote)
+            .push({
+                title: newNote.title,
+                text: newNote.text,
+                date: time
+            })
             .then(data => {
                 newNote.id = data.key;
+                return fire
+                    .database()
+                    .ref(`notes/${getUserUid()}/${data.key}`)
+                    .once('child_added', snap => {
+                        newNote.date = this.getDate(snap.val());
+                    });
+            })
+            .then(() => {
                 const newNotes = [newNote].concat(this.state.notes);
                 notify('success', `${newNote.title} added.`, 2000);
                 this.setState({
@@ -103,14 +129,6 @@ class Notes extends React.Component {
                 });
             })
             .catch(err => notify('error', ADD_NOTE_ERROR_MESSAGE, 4000));
-
-        function getDate() {
-            const date = new Date();
-            const day = date.getDate();
-            const mounth = date.getMonth() + 1;
-            const year = date.getFullYear();
-            return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
-        }
     };
     editNote = (id, title, text, type) => {
         const newEditNote = Object.assign({}, this.state.noteEditMode, {
@@ -215,13 +233,14 @@ class Notes extends React.Component {
         this.setState({
             searchTerm: '',
             searchDateTo: '',
-            searchDateFrrom: ''
+            searchDateFrom: '',
+            notesSearched: this.getUpdatedSearchList('')
         });
     };
-    setSearchTerm = term => {
-        const newNotes = this.getUpdatedSearchList(term);
+    setSearchValue = (searchValue, stateName) => {
+        const newNotes = this.getUpdatedSearchList(searchValue);
         this.setState({
-            searchTerm: term,
+            [stateName]: searchValue,
             notesSearched: newNotes
         });
     };
@@ -257,7 +276,7 @@ class Notes extends React.Component {
                             searchTerm={this.state.searchTerm}
                             searchDateFrom={this.state.searchDateFrom}
                             searchDateTo={this.state.searchDateTo}
-                            setSearchTerm={this.setSearchTerm}
+                            setSearchValue={this.setSearchValue}
                             resetSearch={this.resetSearch}
                         />
                         <NoteList

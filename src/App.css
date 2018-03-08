@@ -613,8 +613,14 @@
     font-size: 20px;
 
 }
-
-
+.note-search-by-date::-webkit-clear-button {
+    display: block;
+    font-size: 14px;
+    padding-right: 8px;
+}
+.note-search-by-date::-webkit-datetime-edit-fields-wrapper { background: white; }
+.note-search-by-date::-webkit-inner-spin-button { display: none; }
+.note-search-by-date::-webkit-calendar-picker-indicator {border-radius: 20px; background: #F96816; color: white}
 /* .search-icon:hover {
     background: rgb(250, 137, 72);
 } */
