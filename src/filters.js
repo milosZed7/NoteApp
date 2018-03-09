@@ -1,13 +1,12 @@
 const getDateFromString = dateString => {
     const [day, month, year] = dateString.split('.');
-    return new Date(year, month - 1, day);
+    return new Date(`${year}-${month}-${day}`);
 };
 const filters = {
-    byText(list = [], { byText: value }) {
-        return value ? list.filter(item => item.text.includes(value)) : list;
-    },
-    byTitle(list = [], { byTitle: value }) {
-        return value ? list.filter(item => item.title.includes(value)) : list;
+    byTextAndTitle(list = [], { byTextAndTitle: value }) {
+        return value && value.trim() ?
+            list.filter(item => `${item.text} ${item.title}`.toLowerCase().includes(value.toLowerCase())) :
+            list;
     },
     byDate(list, { from, to }) {
         const listFrom = from ? list.filter(item => getDateFromString(item.date) >= from) : list;
@@ -16,7 +15,6 @@ const filters = {
 };
 
 const filter = (form, items) => {
-    console.log(items);
     return Object.keys(filters).reduce((acc, filterName) => {
         return filters[filterName](acc, form);
     }, items);

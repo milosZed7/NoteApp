@@ -258,8 +258,7 @@ class Notes extends React.Component {
         let notesCopy = notes ? notes : [...this.state.notes];
         return filter(
             {
-                byText: term,
-                byTitle: term,
+                byTextAndTitle: term,
                 from: dateFrom ? new Date(dateFrom) : '',
                 to: dateTo ? new Date(dateTo) : ''
             },
