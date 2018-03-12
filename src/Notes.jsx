@@ -168,7 +168,7 @@ class Notes extends React.Component {
         fire
             .database()
             .ref(`notes/${getUserUid()}/${note.id}`)
-            .set({ text: note.text, title: note.title, date: note.date })
+            .update({ text: note.text, title: note.title })
             .then(() => {
                 const { searchTerm, searchDateFrom, searchDateTo } = this.state;
                 this.setState({
