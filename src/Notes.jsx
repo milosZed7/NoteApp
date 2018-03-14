@@ -62,6 +62,9 @@ class Notes extends React.Component {
             text: ''
         };
     };
+    getNoteList = noteList => {
+        this.noteList = noteList;
+    };
     mapNotesToNotesWithMode = () => {
         const { searchTerm, searchDateFrom, searchDateTo, noteEditMode, deletedNotes } = this.state;
         const list =
@@ -96,6 +99,12 @@ class Notes extends React.Component {
         const year = date.getFullYear();
         return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
     }
+    smoothScroolUp = (el, step, time = 60 / 1000) => {
+        const interval = setInterval(() => {
+            el.scrollTop -= step;
+            if (!el.scrollTop) clearInterval(interval);
+        }, time);
+    };
 
     addNote = evt => {
         const newNote = Object.assign({}, this.state.newNote);
@@ -132,6 +141,7 @@ class Notes extends React.Component {
                     notes: newNotes,
                     notesSearched: this.getUpdatedSearchList({ searchTerm, searchDateFrom, searchDateTo }, newNotes)
                 });
+                this.smoothScroolUp(this.noteList, 10);
             })
             .catch(err => notify('error', ADD_NOTE_ERROR_MESSAGE, 4000));
     };
@@ -302,6 +312,7 @@ class Notes extends React.Component {
                             deleteNote={this.deleteNote}
                             undoDeletedNote={this.undoDeletedNote}
                             showModal={this.showModal}
+                            getNoteList={this.getNoteList}
                         />
                         <AddNote
                             showSaveBtn={this.showSaveBtn}

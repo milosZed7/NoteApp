@@ -1,8 +1,8 @@
 import React from 'react';
 import Note from './Note';
 
-const NoteList = props => {
-    const mapNotes = note => {
+class NoteList extends React.Component {
+    mapNotes = note => {
         return (
             <Note
                 key={note.id}
@@ -10,19 +10,25 @@ const NoteList = props => {
                 title={note.title}
                 text={note.text}
                 date={note.date}
-                editNote={props.onEditNote}
-                changeEditNote={props.changeEditNote}
-                noteEditMode={props.noteEditMode}
-                saveNote={props.saveNote}
-                cancelEditingNote={props.cancelEditingNote}
-                deleteNote={props.deleteNote}
-                undoDeletedNote={props.undoDeletedNote}
-                showModal={props.showModal}
+                editNote={this.props.onEditNote}
+                changeEditNote={this.props.changeEditNote}
+                noteEditMode={this.props.noteEditMode}
+                saveNote={this.props.saveNote}
+                cancelEditingNote={this.props.cancelEditingNote}
+                deleteNote={this.props.deleteNote}
+                undoDeletedNote={this.props.undoDeletedNote}
+                showModal={this.props.showModal}
                 mode={note.mode}
             />
         );
     };
-    return <div className="note-list">{props.notes.map(mapNotes)}</div>;
-};
+    render() {
+        return (
+            <div className="note-list" ref={this.props.getNoteList}>
+                {this.props.notes.map(this.mapNotes)}
+            </div>
+        );
+    }
+}
 
 export default NoteList;
