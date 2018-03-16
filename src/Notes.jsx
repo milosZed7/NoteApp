@@ -9,6 +9,7 @@ import { getUserUid } from './LocalStorageApi';
 import notify from './NotificationManager';
 import serverTimestamp from './ServerDateTime';
 import filter from './filters';
+import { easeInOutExpo } from './scroll';
 
 const TIME_LEFT_TO_DELETE_NOTE = 4 * 1000;
 const ADD_NOTE_ERROR_MESSAGE = 'Both Note Title and Note Text must be filled.';
@@ -99,11 +100,23 @@ class Notes extends React.Component {
         const year = date.getFullYear();
         return `${day < 10 ? '0' + day : day}.${mounth < 10 ? '0' + mounth : mounth}.${year}.`;
     }
-    smoothScroolUp = (el, step, time = 60 / 1000) => {
-        const interval = setInterval(() => {
-            el.scrollTop -= step;
-            if (!el.scrollTop) clearInterval(interval);
-        }, time);
+    smoothScroolUp = (el, duration) => {
+        const startPosition = el.scrollTop;
+        const range = -el.scrollTop;
+        let startTime;
+
+        function tick() {
+            const elapsed = Date.now() - startTime;
+            el.scrollTop = easeInOutExpo(elapsed, startPosition, range, duration);
+            if (elapsed < duration) requestAnimationFrame(tick);
+        }
+
+        function animate() {
+            startTime = Date.now();
+            tick();
+        }
+
+        animate();
     };
 
     addNote = evt => {
@@ -141,7 +154,7 @@ class Notes extends React.Component {
                     notes: newNotes,
                     notesSearched: this.getUpdatedSearchList({ searchTerm, searchDateFrom, searchDateTo }, newNotes)
                 });
-                this.smoothScroolUp(this.noteList, 10);
+                this.smoothScroolUp(this.noteList, 1000);
             })
             .catch(err => notify('error', ADD_NOTE_ERROR_MESSAGE, 4000));
     };
