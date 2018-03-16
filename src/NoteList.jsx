@@ -24,7 +24,7 @@ class NoteList extends React.Component {
     };
     render() {
         return (
-            <div className="note-list" ref={this.props.getNoteList}>
+            <div className="note-list" ref={this.props.setNoteList}>
                 {this.props.notes.map(this.mapNotes)}
             </div>
         );

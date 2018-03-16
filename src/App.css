@@ -1,3 +1,8 @@
+:root {
+    --modal-width: 550px;
+    --modal-height: 300px;
+}
+
 .App {
     text-align: center;
     display: flex;
@@ -474,9 +479,9 @@
 }
 
 .note-modal {
-    position: relative;
-    width: 550px;
-    height: 300px;
+    position: absolute;
+    width: var(--modal-width);
+    height: var(--modal-height);
     background: #363636;
     padding: 20px;
     color: #ccc;
@@ -487,6 +492,40 @@
     grid-template-columns: 100%;
     grid-template-rows: 1fr 200px 1fr;
     justify-items: start;
+}
+
+.note-modal.note-modal-show {
+    animation: show-modal 0.5s ease-in-out forwards;
+}
+
+.note-modal.note-modal-close {
+    animation: close-modal 0.5s ease-in-out forwards;
+}
+
+@keyframes show-modal {
+    from {
+        transform: scale(0) rotate(0deg);
+        left: calc(var(--modal-x-pos) - calc(var(--modal-width) / 2));
+        top: calc(var(--modal-y-pos) - calc(var(--modal-height) / 2));
+    }
+    to {
+        left: calc(50% - calc(var(--modal-width) / 2));
+        top: calc(50% - calc(var(--modal-height) / 2));
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+@keyframes close-modal {
+    to {
+        transform: scale(0) rotate(0deg);
+        left: calc(var(--modal-x-pos) - calc(var(--modal-width) / 2));
+        top: calc(var(--modal-y-pos) - calc(var(--modal-height) / 2));
+    }
+    from {
+        left: calc(50% - calc(var(--modal-width) / 2));
+        top: calc(50% - calc(var(--modal-height) / 2));
+        transform: scale(1) rotate(360deg);
+    }
 }
 
 .edit-note.edit-note-modal {
@@ -585,16 +624,19 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
-.note-input-text.note-search.note-search-by-title-text{
-    grid-column: span 2; 
+
+.note-input-text.note-search.note-search-by-title-text {
+    grid-column: span 2;
 }
-.note-input-text.note-search.note-search-date-to{
+
+.note-input-text.note-search.note-search-date-to {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 .search-icon {
     /* position: relative; */
-    grid-row:span 2;
+    grid-row: span 2;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     background: #F96816;
@@ -603,24 +645,39 @@
     align-items: center;
     justify-content: center;
 }
-.search-icon:hover{
+
+.search-icon:hover {
     background: rgb(250, 137, 72);
 }
-.search-icon > div {
+
+.search-icon>div {
     /* position: absolute; */
     transform: rotate(45deg);
     user-select: none;
     font-size: 20px;
-
 }
+
 .note-search-by-date::-webkit-clear-button {
     display: block;
     font-size: 14px;
     padding-right: 8px;
 }
-.note-search-by-date::-webkit-datetime-edit-fields-wrapper { background: white; }
-.note-search-by-date::-webkit-inner-spin-button { display: none; }
-.note-search-by-date::-webkit-calendar-picker-indicator {border-radius: 20px; background: #F96816; color: white}
+
+.note-search-by-date::-webkit-datetime-edit-fields-wrapper {
+    background: white;
+}
+
+.note-search-by-date::-webkit-inner-spin-button {
+    display: none;
+}
+
+.note-search-by-date::-webkit-calendar-picker-indicator {
+    border-radius: 20px;
+    background: #F96816;
+    color: white
+}
+
+
 /* .search-icon:hover {
     background: rgb(250, 137, 72);
 } */
@@ -655,6 +712,9 @@
 
 @media all and (max-width: 600px),
 (max-height: 500px) {
+     :root {
+        --modal-width: 70%
+    }
     .note-wrapper {
         margin-top: 23px;
         height: calc(100% - 23px);
@@ -663,9 +723,6 @@
         width: 100%;
         transform: perspective(0) rotate(0deg);
         height: 100%;
-    }
-    .note-modal {
-        width: 70%;
     }
     .add-note {
         order: -1;
@@ -686,8 +743,8 @@
 }
 
 @media all and (max-width: 600px) {
-    .note-modal {
-        width: 98%;
+     :root {
+        --modal-width: 98%
     }
 }
 

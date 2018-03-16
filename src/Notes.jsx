@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransitionGroup } from 'react-transition-group';
+// import { TransitionGroup } from 'react-transition-group';
 import fire from './fire';
 import NoteList from './NoteList';
 import AddNote from './AddNote';
@@ -32,7 +32,8 @@ class Notes extends React.Component {
         },
         searchTerm: '',
         searchDateFrom: '',
-        searchDateTo: ''
+        searchDateTo: '',
+        modalAnimClass: ''
     };
     componentWillMount() {
         let notesRef = fire
@@ -63,7 +64,7 @@ class Notes extends React.Component {
             text: ''
         };
     };
-    getNoteList = noteList => {
+    setNoteList = noteList => {
         this.noteList = noteList;
     };
     mapNotesToNotesWithMode = () => {
@@ -245,17 +246,25 @@ class Notes extends React.Component {
         });
     };
 
-    showModal = note => {
+    showModal = (note, coord) => {
+        document.documentElement.style.setProperty('--modal-x-pos', `${coord.x}px`);
+        document.documentElement.style.setProperty('--modal-y-pos', `${coord.y}px`);
         this.setState({
             modalOn: true,
             noteInModal: note,
+            modalAnimClass: 'note-modal-show',
             noteEditMode: Object.assign({}, this.state.noteEditMode, { inList: false, inModal: false })
         });
     };
-    closeModal = () => {
+    disposeModal = () => {
         this.setState({
             modalOn: false,
             noteInModal: {}
+        });
+    };
+    addClosingAnim = () => {
+        this.setState({
+            modalAnimClass: 'note-modal-close'
         });
     };
     resetSearch = () => {
@@ -294,18 +303,21 @@ class Notes extends React.Component {
             showNoteModal = (
                 <NoteModal
                     note={this.state.noteInModal}
-                    closeModal={this.closeModal}
+                    addClosingAnim={this.addClosingAnim}
                     editNote={this.editNote}
                     noteEditMode={this.state.noteEditMode}
                     saveNote={this.saveNote}
                     changeEditNote={this.changeEditNote}
                     cancelEditingNote={this.cancelEditingNote}
+                    setNoteModal={this.setNoteModal}
+                    animationClass={this.state.modalAnimClass}
+                    disposeModal={this.disposeModal}
                 />
             );
         }
         return (
             <React.Fragment>
-                <TransitionGroup> {showNoteModal}</TransitionGroup>
+                {showNoteModal}
                 <div className="note-component">
                     <div className="note-wrapper">
                         <SearchNotes
@@ -325,7 +337,7 @@ class Notes extends React.Component {
                             deleteNote={this.deleteNote}
                             undoDeletedNote={this.undoDeletedNote}
                             showModal={this.showModal}
-                            getNoteList={this.getNoteList}
+                            setNoteList={this.setNoteList}
                         />
                         <AddNote
                             showSaveBtn={this.showSaveBtn}

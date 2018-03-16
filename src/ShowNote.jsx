@@ -1,14 +1,14 @@
 import React from 'react';
 
 const ShowNote = props => {
-    const showNoteInModal = () => {
+    const showNoteInModal = e => {
         const note = {
             id: props.id,
             text: props.text,
             title: props.title,
             date: props.date
         };
-        props.showModal(note);
+        props.showModal(note, { x: e.clientX, y: e.clientY });
     };
     const deleteNoteClick = evt => {
         evt.preventDefault();
